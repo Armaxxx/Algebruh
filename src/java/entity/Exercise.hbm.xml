@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Nov 30, 2017 10:42:49 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entity.Exercise" table="exercise" catalog="algebruh" optimistic-lock="version">
+        <id name="idexercise" type="java.lang.Integer">
+            <column name="idexercise" />
+            <generator class="identity" />
+        </id>
+        <property name="equation" type="string">
+            <column name="equation" not-null="true" />
+        </property>
+        <property name="eqtype" type="string">
+            <column name="eqtype" not-null="true" />
+        </property>
+        <set name="schoolgroups" table="exercise_schoolgroup" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="idexercise" not-null="true" />
+            </key>
+            <many-to-many entity-name="entity.Schoolgroup">
+                <column name="idgroup" not-null="true" />
+            </many-to-many>
+        </set>
+        <set name="diagrams" table="diagram" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idexercise" not-null="true" />
+            </key>
+            <one-to-many class="entity.Diagram" />
+        </set>
+    </class>
+</hibernate-mapping>

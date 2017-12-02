@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Nov 30, 2017 10:42:49 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entity.Teacher" table="teacher" catalog="algebruh" optimistic-lock="version">
+        <id name="iduser" type="int">
+            <column name="iduser" />
+            <generator class="foreign">
+                <param name="property">user</param>
+            </generator>
+        </id>
+        <one-to-one name="user" class="entity.User" constrained="true"></one-to-one>
+        <set name="schoolgroups" table="schoolgroup" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idteacher" not-null="true" />
+            </key>
+            <one-to-many class="entity.Schoolgroup" />
+        </set>
+    </class>
+</hibernate-mapping>
