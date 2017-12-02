@@ -1,5 +1,5 @@
 package entity;
-// Generated Nov 30, 2017 10:42:49 PM by Hibernate Tools 4.3.1
+// Generated Dec 2, 2017 5:03:56 PM by Hibernate Tools 4.3.1
 
 
 
@@ -9,7 +9,7 @@ package entity;
 public class Diagram  implements java.io.Serializable {
 
 
-     private DiagramId id;
+     private Integer iddiagram;
      private Exercise exercise;
      private Student student;
      private String serial;
@@ -19,26 +19,24 @@ public class Diagram  implements java.io.Serializable {
     }
 
 	
-    public Diagram(DiagramId id, Exercise exercise, Student student, String serial) {
-        this.id = id;
+    public Diagram(Exercise exercise, Student student, String serial) {
         this.exercise = exercise;
         this.student = student;
         this.serial = serial;
     }
-    public Diagram(DiagramId id, Exercise exercise, Student student, String serial, Evaluation evaluation) {
-       this.id = id;
+    public Diagram(Exercise exercise, Student student, String serial, Evaluation evaluation) {
        this.exercise = exercise;
        this.student = student;
        this.serial = serial;
        this.evaluation = evaluation;
     }
    
-    public DiagramId getId() {
-        return this.id;
+    public Integer getIddiagram() {
+        return this.iddiagram;
     }
     
-    public void setId(DiagramId id) {
-        this.id = id;
+    public void setIddiagram(Integer iddiagram) {
+        this.iddiagram = iddiagram;
     }
     public Exercise getExercise() {
         return this.exercise;

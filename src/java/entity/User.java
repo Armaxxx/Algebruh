@@ -1,5 +1,5 @@
 package entity;
-// Generated Nov 30, 2017 10:42:49 PM by Hibernate Tools 4.3.1
+// Generated Dec 2, 2017 5:03:56 PM by Hibernate Tools 4.3.1
 
 
 
@@ -10,7 +10,7 @@ public class User  implements java.io.Serializable {
 
 
      private Integer iduser;
-     private String names;
+     private String firstnames;
      private String surnames;
      private String username;
      private String password;
@@ -22,14 +22,14 @@ public class User  implements java.io.Serializable {
     }
 
 	
-    public User(String names, String surnames, String username, String password) {
-        this.names = names;
+    public User(String firstnames, String surnames, String username, String password) {
+        this.firstnames = firstnames;
         this.surnames = surnames;
         this.username = username;
         this.password = password;
     }
-    public User(String names, String surnames, String username, String password, Administrator administrator, Teacher teacher, Student student) {
-       this.names = names;
+    public User(String firstnames, String surnames, String username, String password, Administrator administrator, Teacher teacher, Student student) {
+       this.firstnames = firstnames;
        this.surnames = surnames;
        this.username = username;
        this.password = password;
@@ -45,12 +45,12 @@ public class User  implements java.io.Serializable {
     public void setIduser(Integer iduser) {
         this.iduser = iduser;
     }
-    public String getNames() {
-        return this.names;
+    public String getFirstnames() {
+        return this.firstnames;
     }
     
-    public void setNames(String names) {
-        this.names = names;
+    public void setFirstnames(String firstnames) {
+        this.firstnames = firstnames;
     }
     public String getSurnames() {
         return this.surnames;

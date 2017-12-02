@@ -1,25 +1,21 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Nov 30, 2017 10:42:49 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated Dec 2, 2017 5:03:56 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="entity.Diagram" table="diagram" catalog="algebruh" optimistic-lock="version">
-        <composite-id name="id" class="entity.DiagramId">
-            <key-property name="iddiagram" type="int">
-                <column name="iddiagram" />
-            </key-property>
-            <key-property name="idstudent" type="int">
-                <column name="idstudent" />
-            </key-property>
-        </composite-id>
+        <id name="iddiagram" type="java.lang.Integer">
+            <column name="iddiagram" />
+            <generator class="identity" />
+        </id>
         <many-to-one name="exercise" class="entity.Exercise" fetch="select">
             <column name="idexercise" not-null="true" />
         </many-to-one>
-        <many-to-one name="student" class="entity.Student" update="false" insert="false" fetch="select">
+        <many-to-one name="student" class="entity.Student" fetch="select">
             <column name="idstudent" not-null="true" />
         </many-to-one>
         <property name="serial" type="string">
-            <column name="serial" not-null="true" />
+            <column name="serial" length="65535" not-null="true" />
         </property>
         <one-to-one name="evaluation" class="entity.Evaluation"></one-to-one>
     </class>
