@@ -9,7 +9,7 @@ package entity;
 public class Diagram  implements java.io.Serializable {
 
 
-     private DiagramId id;
+     private Integer iddiagram;
      private Exercise exercise;
      private Student student;
      private String serial;
@@ -19,27 +19,26 @@ public class Diagram  implements java.io.Serializable {
     }
 
 	
-    public Diagram(DiagramId id, Exercise exercise, Student student, String serial) {
-        this.id = id;
+    public Diagram(Exercise exercise, Student student, String serial) {
         this.exercise = exercise;
         this.student = student;
         this.serial = serial;
     }
-    public Diagram(DiagramId id, Exercise exercise, Student student, String serial, Evaluation evaluation) {
-       this.id = id;
+    public Diagram(Exercise exercise, Student student, String serial, Evaluation evaluation) {
        this.exercise = exercise;
        this.student = student;
        this.serial = serial;
        this.evaluation = evaluation;
     }
    
-    public DiagramId getId() {
-        return this.id;
+    public Integer getIddiagram() {
+        return this.iddiagram;
     }
     
-    public void setId(DiagramId id) {
-        this.id = id;
+    public void setIddiagram(Integer iddiagram){
+        this.iddiagram = iddiagram;
     }
+    
     public Exercise getExercise() {
         return this.exercise;
     }
