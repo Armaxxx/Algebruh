@@ -20,15 +20,12 @@ public class SessionBean implements Serializable {
     private FacesContext fc;
     private HttpServletRequest request;
     private FacesMessage fm;
+    private HttpSession httpSession;
     
     public SessionBean() {
         fc = FacesContext.getCurrentInstance();
         request = (HttpServletRequest)fc.getExternalContext().getRequest();
-        HttpSession httpSession = request.getSession();
-        username = (String) httpSession.getAttribute("username");
-        type = (String) httpSession.getAttribute("type");
-        names = (String) httpSession.getAttribute("names");
-        surnames = (String) httpSession.getAttribute("surnames");
+        httpSession = request.getSession();
     }
     
     public String logout(){
@@ -56,6 +53,13 @@ public class SessionBean implements Serializable {
             fc.addMessage(null, fm);
             fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/" + type.toLowerCase() + "/home");
         }
+    }
+    
+    public void createSession(){
+        username = (String) httpSession.getAttribute("username");
+        type = (String) httpSession.getAttribute("type");
+        names = (String) httpSession.getAttribute("names");
+        surnames = (String) httpSession.getAttribute("surnames");
     }
 
     public String getUsername() {
