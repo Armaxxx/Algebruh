@@ -7,7 +7,7 @@
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/algebruh</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">laconchadetumadre1</property>
-    <property name="hibernate.connection.pool_size">2</property>
+    <property name="hibernate.connection.pool_size">20</property>
     <mapping resource="entity/Schoolgroup.hbm.xml"/>
     <mapping resource="entity/Administrator.hbm.xml"/>
     <mapping resource="entity/User.hbm.xml"/>

@@ -15,6 +15,38 @@
         Welcome administrator <h:outputText value="#{sessionBean.names} #{sessionBean.surnames}" /><br />
         <h:form>
             <h:commandLink action="#{sessionBean.logout()}" value="Cerrar sesión" />
+            <h:dataTable value="#{adminManager.adminTable}" var="at">
+                <h:column>
+                    <f:facet name="header">First Names</f:facet>
+                    <h:inputText value="#{at.firstnames}" disabled="#{at.enable}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Surnames</f:facet>
+                    <h:inputText value="#{at.surnames}" disabled="#{at.enable}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Username</f:facet>
+                    <h:inputText value="#{at.username}"  disabled="#{at.enable}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Password</f:facet>
+                    <h:inputSecret value="#{at.password}" disabled="#{at.enable}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Type</f:facet>
+                    <h:inputSecret value="#{at.type}" disabled="#{at.enable}"/>
+                </h:column>
+                <h:column>
+                    <h:commandLink value="Edit">
+                        <f:ajax/>
+                    </h:commandLink>
+                </h:column>
+                <h:column>
+                    <h:commandLink>
+                        
+                    </h:commandLink>
+                </h:column>
+            </h:dataTable>
         </h:form>
     </h:body>
 </html>
