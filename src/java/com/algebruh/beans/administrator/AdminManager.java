@@ -24,16 +24,52 @@ public class AdminManager implements Serializable {
     private AdminTable  adminSet;
     private List<AdminTable> adminTable;
     private Transaction t;
+    private List<User> userList;
+    private UserType type;
     
     public AdminManager() {
         adminTable = new ArrayList<>();
-        List<User> userList;
-        UserType type;
         
         hibernateSession = HibernateUtil.getSessionFactory().openSession();
         t= hibernateSession.beginTransaction();
         fc= FacesContext.getCurrentInstance();
         request = (HttpServletRequest)fc.getExternalContext().getRequest();
+        Query users = hibernateSession.createQuery("from User");
+        userList = users.list();
+        System.out.println("query completa " +userList.size());
+        for (User user : userList) {
+            System.out.println("entramos a for "+userList.indexOf(user));
+            if(user != null){
+                type = UserType.UNKNOWN;
+                System.out.println("Usuario Nulo");
+                if(user.getStudent() != null){
+                    System.out.println("Usuario Estudiante");
+                    type = UserType.STUDENT;
+                }else if(user.getTeacher() != null){
+                    System.out.println("Usuario Maestro");
+                    type = UserType.TEACHER;
+                }
+                else if(user.getAdministrator() != null){
+                    System.out.println("Usuario Admin");
+                    type = UserType.ADMINISTRATOR;
+                }
+                System.out.println(user.getFirstnames());
+                System.out.println(user.getSurnames());
+                System.out.println(user.getUsername());
+                System.out.println(user.getPassword());
+                System.out.println(type.name().toLowerCase());
+                System.out.println("Empezamos el adminset");
+                adminSet = new AdminTable(user.getIduser(),user.getFirstnames(), user.getSurnames(), user.getUsername(), user.getPassword(), type.name().toLowerCase(), TRUE);
+                System.out.println("Terminamos el adminset");
+                adminTable.add(adminSet);
+                System.out.println("agregamos el adminset");
+            }
+        }
+    }
+    
+    public void resetAdminTable(){
+        System.out.println("RESET");
+        adminTable.clear();
         Query users = hibernateSession.createQuery("from User");
         userList = users.list();
         System.out.println("query completa " +userList.size());
@@ -72,6 +108,7 @@ public class AdminManager implements Serializable {
         System.out.println("conseguimos al usuario "+user.getFirstnames());
         hibernateSession.delete(user);
         t.commit();
+        resetAdminTable();
     }
     public void cancelEdit(int id){
         adminTable.get(id);

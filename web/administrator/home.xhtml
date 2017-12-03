@@ -13,7 +13,7 @@
         </f:metadata>
         <h:messages></h:messages>
         Welcome administrator <h:outputText value="#{sessionBean.names} #{sessionBean.surnames}" /><br />
-        <h:form>
+        <h:form id="adminForm">
             <h:commandLink action="#{sessionBean.logout()}" value="Cerrar sesión" />
             <h:dataTable id="userTable" value="#{adminManager.adminTable}" var="at">
                 <h:column>
@@ -43,12 +43,12 @@
                 </h:column>
                 <h:column>
                     <h:commandLink value="Cancel" action="#{adminManager.cancelEdit(at.iduser)}" rendered="#{not at.enable}" >
-                    <f:ajax render="todoForm:todoTable" />
-                </h:commandLink>
-            </h:column>
+                        <f:ajax event="click" render="@form" />
+                    </h:commandLink>
+                </h:column>
                 <h:column>
                     <h:commandLink value="Erase" action="#{adminManager.deleteUser(at.iduser)}" rendered="#{at.enable}" onclick="return confirm('Are you sure?')">
-                        <f:ajax execute="@form" render="userTable"/>
+                        <f:ajax render="@form" />
                     </h:commandLink>
                 </h:column>
             </h:dataTable>
