@@ -62,6 +62,8 @@ public class LoginBean implements Serializable {
                     HttpSession httpSession = request.getSession();
                     httpSession.setAttribute("username", username);
                     httpSession.setAttribute("type", type.name());
+                    httpSession.setAttribute("names", user.getNames());
+                    httpSession.setAttribute("surnames", user.getSurnames());
                     fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Inicio de sesión correcto", null);
                     fc.addMessage(null, fm);
                     

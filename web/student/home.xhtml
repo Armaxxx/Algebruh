@@ -12,7 +12,7 @@
             <f:attribute name="typeRequired" value="#{userTypeBean.STUDENT}" />
         </f:metadata>
         <h:messages></h:messages>
-        Welcome student <h:outputText value="#{sessionBean.username}" /><br />
+        Welcome student <h:outputText value="#{sessionBean.names} #{sessionBean.surnames}" /><br />
         <h:form>
             <h:commandLink action="#{sessionBean.logout()}" value="Cerrar sesión" />
         </h:form>
