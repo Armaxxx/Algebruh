@@ -30,6 +30,7 @@ public class LoginBean implements Serializable {
     private FacesContext fc;
     private HttpServletRequest request;
     private FacesMessage fm;
+    private SessionBean appSession;
     
     public LoginBean() {
     }
@@ -64,6 +65,7 @@ public class LoginBean implements Serializable {
                     httpSession.setAttribute("type", type.name());
                     httpSession.setAttribute("names", user.getFirstnames());
                     httpSession.setAttribute("surnames", user.getSurnames());
+                    appSession.createSession();
                     fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Inicio de sesión correcto", null);
                     fc.addMessage(null, fm);
                     
