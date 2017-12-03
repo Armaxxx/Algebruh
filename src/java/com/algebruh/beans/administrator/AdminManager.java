@@ -67,7 +67,7 @@ public class AdminManager implements Serializable {
     }
     public void deleteUser(int iduser){
         System.out.println("entramos delete");
-        User user = (User) hibernateSession.createQuery("from User where iduser='"+iduser+"'").uniqueResult();
+        User user = (User) hibernateSession.get(User.class, iduser);
         System.out.println("conseguimos al usuario "+user.getFirstnames());
         hibernateSession.delete(user);
     }
