@@ -7,13 +7,13 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import static java.lang.Boolean.TRUE;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 @Named(value = "adminManager")
 @SessionScoped
 public class AdminManager implements Serializable {
@@ -23,6 +23,7 @@ public class AdminManager implements Serializable {
     private Session hibernateSession;
     private AdminTable  adminSet;
     private List<AdminTable> adminTable;
+    private Transaction t;
     
     public AdminManager() {
         adminTable = new ArrayList<>();
@@ -30,7 +31,7 @@ public class AdminManager implements Serializable {
         UserType type;
         
         hibernateSession = HibernateUtil.getSessionFactory().openSession();
-        hibernateSession.beginTransaction();
+        t= hibernateSession.beginTransaction();
         fc= FacesContext.getCurrentInstance();
         request = (HttpServletRequest)fc.getExternalContext().getRequest();
         Query users = hibernateSession.createQuery("from User");
@@ -70,6 +71,7 @@ public class AdminManager implements Serializable {
         User user = (User) hibernateSession.get(User.class, iduser);
         System.out.println("conseguimos al usuario "+user.getFirstnames());
         hibernateSession.delete(user);
+        t.commit();
     }
     public void cancelEdit(int id){
         adminTable.get(id);
