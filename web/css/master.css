@@ -204,15 +204,14 @@ textarea:active, textarea:focus{
 	color: #F33;
 }
 
-.sidebar ul.nav{
-	list-style-type: none;
+.sidebar .nav{
 	width: 100%;
 	margin: 0;
 	padding: 0;
 	margin-top: 30px;
 }
 
-.sidebar .nav li a{
+.sidebar .nav a{
 	display: block;
 	font-size: 24px;
 	color: #049;
@@ -222,7 +221,7 @@ textarea:active, textarea:focus{
 	text-align: center;
 }
 
-.sidebar .nav li a:hover{
+.sidebar .nav a:hover{
 	color: #FFF;
 	background-color: #049;
 }

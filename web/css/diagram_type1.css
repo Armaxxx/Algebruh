@@ -1,0 +1,103 @@
+*{
+	box-sizing: border-box;
+}
+html, body{
+	width: 100%;
+	height: 100%;
+}
+body{
+	margin: 0;
+	padding: 0;
+	font-family: sans-serif;
+}
+
+.canvas{
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+#toolbox{
+	position: absolute;
+	width: 100px;
+	height: 100%;
+	top: 0;
+	right: 0;
+	background-color: #CCC;
+}
+#equations{
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: block;
+	width: 100%;
+	height:150px;
+	background-color: #FFF;
+	padding: 10px;
+}
+
+.canvas, #equations{
+	padding-right: 100px;
+}
+.container{
+	display: block;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	padding-top: 150px;
+}
+#c{
+	background-color: #DDF;
+}
+
+#goal, #current{
+	display: block;
+	width: 100%;
+	font-size: 36px;
+	font-weight: bold;
+	color: #333;
+	text-align: center;
+}
+
+#toolbox button{
+	display: block;
+	width: 50px;
+	height: 50px;
+	border: none;
+	cursor: pointer;
+	color: #FFF;
+	font-weight: bold;
+	margin: 5px auto;
+	background-color: #333;
+}
+
+#addX{
+	background-color: #15C;
+}
+#addX:hover{
+	background-color: #009;
+}
+
+#toolbox #addUnit{
+	background-color: #090;
+}
+
+#toolbox #subX{
+	background-color: #900;
+}
+
+#toolbox #subUnit{
+	background-color: #606;
+}
+
+#toolbox button.active{
+	border: 2px solid #FF0;
+}
+
+#toolbox button.control{
+	width: 70px;
+}
+
+#toolbox button.control:hover{
+	background-color: #666;
+}

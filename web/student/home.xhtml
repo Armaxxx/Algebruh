@@ -26,20 +26,20 @@
                                 <span class="fa fa-sign-out"></span>
                             </h:commandLink>
                         </h:form>
-                        <!--<a href="#" title="Cerrar sesión" ><span class="fa fa-sign-out"></span></a>-->
                     </div>
                 </div>
             </div>
             <h:messages styleClass="text-info messages"></h:messages>
-            <ul class="nav">
-                <li><a href="#">Usuarios</a></li>
-                <li><a href="#">Grupos</a></li>
-            </ul>
+            <div class="nav">
+                <h:form>
+                    <h:link outcome="createDiagram" value="Crear Diagrama"  /> 
+                </h:form>
+            </div>
         </div>
-        <div class="container">
+        <h:panelGroup layout="block" styleClass="container" id="container">
             <h1>Bienvenido Alumno</h1>
             <p>Navegue por las opciones utilizando el menú de la izquierda</p>
-        </div>
+        </h:panelGroup>
     </h:body>
 </html>
 
