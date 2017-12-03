@@ -35,9 +35,10 @@ public class Diagram  implements java.io.Serializable {
         return this.iddiagram;
     }
     
-    public void setIddiagram(Integer iddiagram) {
+    public void setIddiagram(Integer iddiagram){
         this.iddiagram = iddiagram;
     }
+    
     public Exercise getExercise() {
         return this.exercise;
     }
