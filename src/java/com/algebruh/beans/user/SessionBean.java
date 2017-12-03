@@ -31,7 +31,6 @@ public class SessionBean implements Serializable {
     public String logout(){
         fc = FacesContext.getCurrentInstance();
         request = (HttpServletRequest)fc.getExternalContext().getRequest();
-        HttpSession httpSession = request.getSession();
         httpSession.removeAttribute("username");
         httpSession.removeAttribute("type");
         httpSession.removeAttribute("names");
@@ -43,6 +42,7 @@ public class SessionBean implements Serializable {
     public void validateSession(ComponentSystemEvent event) throws IOException{
         String typeRequired = (String) event.getComponent().getAttributes().get("typeRequired");
         fc = FacesContext.getCurrentInstance();
+        createSession();
         if(username == null){
             fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Por favor, inicia sesión", null);
             fc.addMessage(null, fm);
