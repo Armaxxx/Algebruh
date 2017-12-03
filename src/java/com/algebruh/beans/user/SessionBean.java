@@ -46,11 +46,13 @@ public class SessionBean implements Serializable {
         if(username == null){
             fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Por favor, inicia sesión", null);
             fc.addMessage(null, fm);
+            logout();
             fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/user/login");
         }
         else if(type == null || !type.equals(typeRequired)){
             fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "No tienes permiso para acceder a esa página", null);
             fc.addMessage(null, fm);
+            logout();
             fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/" + type.toLowerCase() + "/home");
         }
     }

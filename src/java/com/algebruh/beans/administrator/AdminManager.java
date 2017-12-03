@@ -6,6 +6,7 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import static java.lang.Boolean.TRUE;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.faces.application.FacesMessage;
@@ -24,6 +25,7 @@ public class AdminManager implements Serializable {
     private List<AdminTable> adminTable;
     
     public AdminManager() {
+        adminTable = new ArrayList<>();
         List<User> userList;
         UserType type;
         
@@ -56,14 +58,24 @@ public class AdminManager implements Serializable {
                 System.out.println(user.getPassword());
                 System.out.println(type.name().toLowerCase());
                 System.out.println("Empezamos el adminset");
-                adminSet = new AdminTable(user.getFirstnames(), user.getSurnames(), user.getUsername(), user.getPassword(), type.name().toLowerCase(), TRUE);
+                adminSet = new AdminTable(user.getIduser(),user.getFirstnames(), user.getSurnames(), user.getUsername(), user.getPassword(), type.name().toLowerCase(), TRUE);
                 System.out.println("Terminamos el adminset");
                 adminTable.add(adminSet);
                 System.out.println("agregamos el adminset");
             }
         }
     }
-
+    public void deleteUser(int iduser){
+        System.out.println("entramos delete");
+        User user = (User) hibernateSession.createQuery("from User where iduser='"+iduser+"'").uniqueResult();
+        System.out.println("conseguimos al usuario "+user.getFirstnames());
+        hibernateSession.delete(user);
+    }
+    public void cancelEdit(int id){
+        adminTable.get(id);
+        
+    }
+    
     public List<AdminTable> getAdminTable() {
         return adminTable;
     }
@@ -71,5 +83,4 @@ public class AdminManager implements Serializable {
     public void setAdminTable(List<AdminTable> adminTable) {
         this.adminTable = adminTable;
     }
-    
 }

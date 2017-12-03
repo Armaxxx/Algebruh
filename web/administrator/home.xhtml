@@ -15,7 +15,7 @@
         Welcome administrator <h:outputText value="#{sessionBean.names} #{sessionBean.surnames}" /><br />
         <h:form>
             <h:commandLink action="#{sessionBean.logout()}" value="Cerrar sesión" />
-            <h:dataTable value="#{adminManager.adminTable}" var="at">
+            <h:dataTable id="userTable" value="#{adminManager.adminTable}" var="at">
                 <h:column>
                     <f:facet name="header">First Names</f:facet>
                     <h:inputText value="#{at.firstnames}" disabled="#{at.enable}"/>
@@ -34,16 +34,21 @@
                 </h:column>
                 <h:column>
                     <f:facet name="header">Type</f:facet>
-                    <h:inputSecret value="#{at.type}" disabled="#{at.enable}"/>
+                    <h:inputText value="#{at.type}" disabled="#{at.enable}"/>
                 </h:column>
                 <h:column>
                     <h:commandLink value="Edit">
-                        <f:ajax/>
+                        <f:ajax render="userTable"/>
                     </h:commandLink>
                 </h:column>
                 <h:column>
-                    <h:commandLink>
-                        
+                    <h:commandLink value="Cancel" action="#{adminManager.cancelEdit(at.iduser)}" rendered="#{not at.enable}" >
+                    <f:ajax render="todoForm:todoTable" />
+                </h:commandLink>
+            </h:column>
+                <h:column>
+                    <h:commandLink value="Erase" action="#{adminManager.deleteUser(at.iduser)}" rendered="#{at.enable}" onclick="return confirm('Are you sure?')">
+                        <f:ajax execute="@form" render="userTable"/>
                     </h:commandLink>
                 </h:column>
             </h:dataTable>

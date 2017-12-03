@@ -10,6 +10,7 @@ package com.algebruh.beans.administrator;
  * @author Armax
  */
 public class AdminTable {
+    private int iduser;
     private String firstnames;
     private String surnames;
     private String username;
@@ -19,13 +20,18 @@ public class AdminTable {
     public AdminTable() {
     }
 
-    public AdminTable(String firstnames, String surnames, String username, String password, String type, Boolean enable) {
+    public AdminTable(int iduser, String firstnames, String surnames, String username, String password, String type, Boolean enable) {
+        this.iduser = iduser;
         this.firstnames = firstnames;
         this.surnames = surnames;
         this.username = username;
         this.password = password;
         this.type = type;
         this.enable = enable;
+    }
+
+    public int getIduser() {
+        return iduser;
     }
     
     public String getFirstnames() {
