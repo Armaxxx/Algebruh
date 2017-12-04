@@ -1,6 +1,9 @@
 package com.algebruh.beans.administrator;
 import com.algebruh.common.utils.UserType;
+import entity.Administrator;
 import entity.HibernateUtil;
+import entity.Student;
+import entity.Teacher;
 import entity.User;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -110,11 +113,70 @@ public class AdminManager implements Serializable {
         t.commit();
         resetAdminTable();
     }
-    public void cancelEdit(int id){
-        adminTable.get(id);
-        
+    public void editUser(AdminTable at){
+        int index;
+        index = adminTable.indexOf(at);
+        resetAdminTable();
+        System.out.println(index);
+        at.setEnable(false);
+        adminTable.set(index, at);
     }
-    
+    public void cancelEdit(){
+        resetAdminTable(); 
+    }
+    public void saveUser(AdminTable at){
+        System.out.println("entramos al SAVE");
+        System.out.println("Nombre editado: "+at.getFirstnames());
+        System.out.println("apellido editado: "+at.getSurnames());
+        System.out.println("usuario editado: "+at.getUsername());
+        System.out.println("contra editado: "+at.getPassword());
+        System.out.println("tipo editado: "+at.getType());
+        User user = (User) hibernateSession.get(User.class, at.getIduser());
+        System.out.println("conseguimos al usuario "+user.getFirstnames());
+        user.setFirstnames(at.getFirstnames());
+        user.setSurnames(at.getSurnames());
+        user.setPassword(at.getPassword());
+        user.setUsername(at.getUsername());
+        System.out.println("El usuario es ahora "+user.getFirstnames());
+        hibernateSession.save(user);
+        user.setFirstnames(at.getFirstnames());
+        user.setSurnames(at.getSurnames());
+        user.setPassword(at.getPassword());
+        user.setUsername(at.getUsername());
+        System.out.println("Usuario Guardado");
+        System.out.println("El usuario es ahora "+user.getFirstnames());
+        System.out.println("Es de tipo "+at.getType());
+        switch(at.getType()){
+            case "1":
+                System.out.println("El usuario es Administrador");
+                Administrator admin = new Administrator(user);
+                hibernateSession.save(admin);
+                System.out.println("Tipo de usuario guardado");
+                break;
+            case "2":
+                System.out.println("El usuario es Profesor");
+                type = UserType.TEACHER;
+                Teacher teach = new Teacher(user);
+                hibernateSession.save(teach);
+                System.out.println("Tipo de usuario guardado");
+                break;
+            case "3":
+                System.out.println("El usuario es Estudiante");
+                type = UserType.STUDENT;
+                Student student = new Student(user);
+                hibernateSession.save(student);
+                System.out.println("Tipo de usuario guardado");
+                break;
+            case "4":
+                type = UserType.UNKNOWN;
+                break;
+            default:
+                type = UserType.UNKNOWN;
+                break;
+        }
+        t.commit();
+        resetAdminTable();
+    }
     public List<AdminTable> getAdminTable() {
         return adminTable;
     }
