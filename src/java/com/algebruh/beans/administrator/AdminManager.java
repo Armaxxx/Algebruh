@@ -33,6 +33,7 @@ public class AdminManager implements Serializable {
     private Boolean isAdding;
     
     public AdminManager() {
+        newUser = new AdminTable();
         adminTable = new ArrayList<>();
         isAdding = false;
         hibernateSession = HibernateUtil.getSessionFactory().openSession();
@@ -126,6 +127,50 @@ public class AdminManager implements Serializable {
     public void cancelEdit(){
         resetAdminTable(); 
     }
+    public void saveNewUser(AdminTable at){
+        t= hibernateSession.beginTransaction();
+        User user = new User();
+        user.setFirstnames(at.getFirstnames());
+        user.setSurnames(at.getSurnames());
+        user.setPassword(at.getPassword());
+        user.setUsername(at.getUsername());
+        switch(at.getType()){
+            case "1":
+                System.out.println("El usuario es Administrador");
+                Administrator admin = new Administrator(user);
+                user.setAdministrator(admin);
+                hibernateSession.save(admin);
+                System.out.println("Tipo de usuario guardado");
+                break;
+            case "2":
+                System.out.println("El usuario es Profesor");
+                type = UserType.TEACHER;
+                Teacher teach = new Teacher(user);
+                user.setTeacher(teach);
+                hibernateSession.save(teach);
+                System.out.println("Tipo de usuario guardado");
+                break;
+            case "3":
+                System.out.println("El usuario es Estudiante");
+                type = UserType.STUDENT;
+                Student student = new Student(user);
+                user.setStudent(student);
+                hibernateSession.save(student);
+                System.out.println("Tipo de usuario guardado");
+                break;
+            case "4":
+                type = UserType.UNKNOWN;
+                break;
+            default:
+                type = UserType.UNKNOWN;
+                break;
+        }
+        hibernateSession.save(user);
+        System.out.println("Usuario Guardado");
+        t.commit();
+        resetAdminTable();
+        isAdding = false;
+    }
     public void saveUser(AdminTable at){
         t= hibernateSession.beginTransaction();
         System.out.println("entramos al SAVE");
@@ -137,11 +182,6 @@ public class AdminManager implements Serializable {
         User user = (User) hibernateSession.get(User.class, at.getIduser());
         System.out.println("conseguimos al usuario "+user.getFirstnames());
        deleteUserType(user);
-        user.setFirstnames(at.getFirstnames());
-        user.setSurnames(at.getSurnames());
-        user.setPassword(at.getPassword());
-        user.setUsername(at.getUsername());
-        System.out.println("El usuario es ahora "+user.getFirstnames());
         user.setFirstnames(at.getFirstnames());
         user.setSurnames(at.getSurnames());
         user.setPassword(at.getPassword());
