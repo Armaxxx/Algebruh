@@ -14,7 +14,47 @@
         <h:messages></h:messages>
         Welcome administrator <h:outputText value="#{sessionBean.names} #{sessionBean.surnames}" /><br />
         <h:form id="adminForm">
-            <h:commandLink action="#{sessionBean.logout()}" value="Cerrar sesión" />
+            <h:commandLink action="#{sessionBean.logout()}" value="Cerrar sesión" /><br/>
+            <h:commandLink action="#{adminManager.setIsAdding(true)}" value="A&ntilde;adir usuario" >
+                <f:ajax render="@form"/>
+            </h:commandLink>
+            <h:dataTable id="addUserTable" rendered="#{adminManager.isAdding}">
+                <h:column>
+                    <f:facet name="header">First Names</f:facet>
+                    <h:inputText value="#{adminManager.newUser.firstnames}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Surnames</f:facet>
+                    <h:inputText value="#{adminManager.newUser.surnames}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Username</f:facet>
+                    <h:inputText value="#{adminManager.newUser.username}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Password</f:facet>
+                    <h:inputText value="#{adminManager.newUser.password}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Type</f:facet>
+                    <h:selectOneMenu value = "#{adminManager.newUser.type}"> 
+                        <f:selectItem itemValue = "1" itemLabel = "Administrator" /> 
+                        <f:selectItem itemValue = "2" itemLabel = "Teacher" />
+                        <f:selectItem itemValue = "3" itemLabel = "Student" />
+                        <f:selectItem itemValue = "4" itemLabel = "none" />
+                    </h:selectOneMenu> 
+                </h:column>
+                <h:column>
+                    <h:commandLink value="Save" action="#{adminManager.saveUser(adminManager.newUser)}">
+                        <f:ajax execute="@form" render="@form"/>
+                    </h:commandLink>
+                </h:column>
+                <h:column>
+                    <h:commandLink value="Cancel" action="#{adminManager.setIsAdding(false)}">
+                        <f:ajax render="@form" />
+                    </h:commandLink>
+                </h:column>
+            </h:dataTable>
             <h:dataTable id="userTable" value="#{adminManager.adminTable}" var="at">
                 <h:column>
                     <f:facet name="header">First Names</f:facet>
@@ -51,7 +91,7 @@
                         <f:ajax render="@form"/>
                     </h:commandLink>
                     <h:commandLink value="Save" action="#{adminManager.saveUser(at)}" rendered="#{not at.enable}">
-                        <f:ajax render="@form"/>
+                        <f:ajax execute="@form" render="@form"/>
                     </h:commandLink>
                 </h:column>
                 <h:column>
