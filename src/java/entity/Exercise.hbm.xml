@@ -14,6 +14,9 @@
         <property name="eqtype" type="string">
             <column name="eqtype" not-null="true" />
         </property>
+        <property name="solution" type="string">
+            <column name="solution" not-null="true" />
+        </property>
         <set name="schoolgroups" table="exercise_schoolgroup" inverse="false" lazy="true" fetch="select">
             <key>
                 <column name="idexercise" not-null="true" />

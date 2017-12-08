@@ -31,15 +31,29 @@
             </div>
             <h:messages styleClass="text-info messages"></h:messages>
             <div class="nav">
-                <h:link value="Inicio" styleClass="active" />
+                <h:link outcome="home" value="Inicio" />
                 <h:form>
-                    <h:commandLink action="#{exerciseManager.showGroupExercises()}" value="Ejercicios" />
+                    <h:link value="Ejercicios" styleClass="active" />
                 </h:form>
             </div>
         </div>
         <h:panelGroup layout="block" styleClass="container" id="container">
-            <h1>Bienvenido Alumno</h1>
-            <p>Navegue por las opciones utilizando el menú de la izquierda</p>
+            <h1>Ejercicios</h1>
+            <h:form id="exerciseForm">
+                <h:dataTable id="exerciseTable" value="#{exerciseManager.exerciseTable}" var="ex">
+                    <h:column>
+                        <f:facet name="header">Exercise</f:facet>
+                        <h:outputText value="#{ex.equation}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Estado</f:facet>
+                        <h:outputText value="#{ex.status}"/>
+                    </h:column>
+                    <h:column>
+                        <h:commandLink value="Resolver" action="#{diagramManager.solve(ex.idexercise)}" rendered="#{!ex.solved}" />
+                    </h:column>
+                </h:dataTable>
+            </h:form>
         </h:panelGroup>
     </h:body>
 </html>

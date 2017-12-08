@@ -1,0 +1,17 @@
+body{
+	background-color: #FFF;
+}
+.container{
+	width: 500px;
+	margin: 0 auto;
+}
+
+#logo{
+	width: 100%;
+	text-align: center;
+	font-size: 56px;
+}
+
+h1{
+	text-align: center;
+}

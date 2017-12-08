@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>Crear diagrama - Estudiante</title>
+        <link rel="stylesheet" type="text/css" href="../css/diagram_type1.css" />
+    </h:head>
+    <h:body>
+        <div class="canvas">
+            <div id="equations">
+                <span id="goal"></span>
+                <span id="current"></span>
+                <span id='mensaje'>Representa la ecuaci&oacute;n mostrada usando los bloques</span>
+            </div>
+            <div class="container">
+                <canvas id="c" width="800" height="400"></canvas>
+            </div>
+        </div>
+        <div id="toolbox">
+            <p>Herramientas</p>
+            <div id="controls">
+                <button id="addX" onclick="changeOption(0)" class="active">X</button>
+                <button id="addUnit" onclick="changeOption(1)">1</button>
+                <button id="subX" onclick="changeOption(2)">-X</button>
+                <button id="subUnit" onclick="changeOption(3)">-1</button>
+                <hr />
+                <button class='control' onclick="removeAll()">Borrar Todo</button>
+                <h:form id="saveData">
+                    <h:inputHidden id="jsondata" value="#{diagramManager.jsondata}" />
+                    <h:commandButton id="save" value="Guardar" onclick="return save()" action="#{diagramManager.save()}"/>
+                </h:form>    
+                <h:link value="Regresar" outcome="/student/home"/>
+            </div>
+        </div>
+        
+        <script type="text/javascript" src='../js/fabric.js'></script>
+        <script type="text/javascript" src="../js/diagram_type1.js"></script>
+        <script type="text/javascript">
+            function save(){
+                if(step == 2){
+                    document.getElementById('saveData:jsondata').value = JSON.stringify(canvas.toJSON());
+                    return true;
+                }else{
+                    alert('Aun no has terminado');
+                    return false;
+                }
+            }
+            init(#{diagramManager.eqElements[0]},#{diagramManager.eqElements[1]},#{diagramManager.eqElements[2]},#{diagramManager.eqElements[3]},#{diagramManager.solution});
+        </script>
+    </h:body>
+</html>
+
