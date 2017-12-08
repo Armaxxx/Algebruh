@@ -11,7 +11,8 @@
             <div id="equations">
                 <span id="goal"></span>
                 <span id="current"></span>
-                <span id='mensaje'>Representa la ecuación mostrada usando los bloques</span>
+                <span id='mensaje'>Representa la ecuaci&oacute;n mostrada usando los bloques</span>
+                <input type="text" id="yeison" />
             </div>
             <div class="container">
                 <canvas id="c" width="800" height="400"></canvas>
@@ -25,12 +26,25 @@
                 <button id="subX" onclick="changeOption(2)">-X</button>
                 <button id="subUnit" onclick="changeOption(3)">-1</button>
                 <hr />
-                    <button class='control' onclick="removeAll()">Borrar Todo</button>
+                <button class='control' onclick="removeAll()">Borrar Todo</button>
+                <h:form>
+                    <h:commandButton id="save" value="Guardar" onclick="return save()"/>
+                </h:form>    
+                <h:link value="Regresar" outcome="/student/home"/>
             </div>
         </div>
-
+        
         <script type="text/javascript" src='../js/fabric.js'></script>
         <script type="text/javascript" src="../js/diagram_type1.js"></script>
+        <script type="text/javascript">
+            function save(){
+                alert('Not implemented yet');
+                alert(JSON.stringify(canvas.toJSON()));
+                
+                return false;
+            }
+            init(2,1,1,3,2);
+        </script>
     </h:body>
 </html>
 

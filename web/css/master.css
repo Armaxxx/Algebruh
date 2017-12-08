@@ -225,3 +225,8 @@ textarea:active, textarea:focus{
 	color: #FFF;
 	background-color: #049;
 }
+
+.sidebar .nav a.active{
+    background-color: #222;
+    color: #FFF;
+}

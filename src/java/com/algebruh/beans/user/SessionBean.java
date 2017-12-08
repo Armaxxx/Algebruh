@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 @Named(value = "sessionBean")
 @SessionScoped
 public class SessionBean implements Serializable {
+    private int iduser;
     private String username;
     private String names;
     private String surnames;
@@ -25,6 +26,7 @@ public class SessionBean implements Serializable {
         fc = FacesContext.getCurrentInstance();
         request = (HttpServletRequest)fc.getExternalContext().getRequest();
         HttpSession httpSession = request.getSession();
+        iduser = Integer.parseInt((String) httpSession.getAttribute("iduser"));
         username = (String) httpSession.getAttribute("username");
         type = (String) httpSession.getAttribute("type");
         names = (String) httpSession.getAttribute("names");
@@ -35,6 +37,7 @@ public class SessionBean implements Serializable {
         fc = FacesContext.getCurrentInstance();
         request = (HttpServletRequest)fc.getExternalContext().getRequest();
         HttpSession httpSession = request.getSession();
+        httpSession.removeAttribute("iduser");
         httpSession.removeAttribute("username");
         httpSession.removeAttribute("type");
         httpSession.removeAttribute("names");
@@ -58,6 +61,14 @@ public class SessionBean implements Serializable {
         }
     }
 
+    public int getIduser() {
+        return iduser;
+    }
+
+    public void setIduser(int iduser) {
+        this.iduser = iduser;
+    }
+    
     public String getUsername() {
         return username;
     }
