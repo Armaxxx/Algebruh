@@ -13,87 +13,141 @@
         </f:metadata>
         <h:messages></h:messages>
         Welcome administrator <h:outputText value="#{sessionBean.names} #{sessionBean.surnames}" /><br />
-        <h:form id="adminForm">
+        <h:form id="adminMenu">
             <h:commandLink action="#{sessionBean.logout()}" value="Cerrar sesión" /><br/>
-            <h:commandLink action="#{adminManager.setIsAdding(true)}" value="A&ntilde;adir usuario" >
+            <h:commandLink action="#{adminManager.setShowUser(true)}" value="Administración de usuarios" rendered="#{!adminManager.showUser}"><br/>
                 <f:ajax execute="@form" render="@form"/>
             </h:commandLink>
-            <h:panelGrid id="addUserPanel" columns="5" rendered="#{adminManager.isAdding}">
-                <f:facet name="header">New User</f:facet>
-                <h:outputText value="First Names"/>
-                <h:outputText value="Surnames"/>
-                <h:outputText value="Username"/>
-                <h:outputText value="Password"/>
-                <h:outputText value="Type"/>
-                <h:inputText value="#{adminManager.newUser.firstnames}"/>
-                <h:inputText value="#{adminManager.newUser.surnames}"/>
-                <h:inputText value="#{adminManager.newUser.username}"/>
-                <h:inputText value="#{adminManager.newUser.password}"/>
-                <h:selectOneMenu value = "#{adminManager.newUser.type}"> 
-                    <f:selectItem itemValue = "1" itemLabel = "Administrator" /> 
-                    <f:selectItem itemValue = "2" itemLabel = "Teacher" />
-                    <f:selectItem itemValue = "3" itemLabel = "Student" />
-                    <f:selectItem itemValue = "4" itemLabel = "none" />
-                </h:selectOneMenu>
-                <h:panelGrid id="addUserPanelcommands" columns="2" border="1">
-                    <h:commandLink value="Save" action="#{adminManager.saveNewUser(adminManager.newUser)}">
-                        <f:ajax execute="@form" render="@form"/>
-                    </h:commandLink>
-                    <h:commandLink value="Cancel" action="#{adminManager.setIsAdding(false)}">
-                        <f:ajax render="@form" />
-                    </h:commandLink>
-                </h:panelGrid>
-            </h:panelGrid>>
-            <h:dataTable id="userTable" value="#{adminManager.adminTable}" var="at">
-                <h:column>
-                    <f:facet name="header">First Names</f:facet>
-                    <h:outputText value="#{at.firstnames}" rendered="#{at.enable}"/>
-                    <h:inputText value="#{at.firstnames}" rendered="#{not at.enable}"/>
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Surnames</f:facet>
-                    <h:outputText value="#{at.surnames}" rendered="#{at.enable}"/>
-                    <h:inputText value="#{at.surnames}" rendered="#{not at.enable}"/>
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Username</f:facet>
-                    <h:outputText value="#{at.username}" rendered="#{at.enable}"/>
-                    <h:inputText value="#{at.username}" rendered="#{not at.enable}"/>
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Password</f:facet>
-                    <h:outputText value="#{at.password}" rendered="#{at.enable}"/>
-                    <h:inputText value="#{at.password}" rendered="#{not at.enable}"/>
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Type</f:facet>
-                    <h:outputText value="#{at.type}" rendered="#{at.enable}"/>
-                    <h:selectOneMenu value = "#{at.type}" rendered="#{not at.enable}"> 
+            <h:commandLink action="#{adminManager.setShowUser(false)}" value="Cerrar menú de usuarios" rendered="#{adminManager.showUser}"><br/>
+                <f:ajax execute="@form" render="@form"/>
+            </h:commandLink>
+            <h:commandLink action="#{adminManagerGroup.openGroupMenu()}" value="Administración de grupos" rendered="#{!adminManagerGroup.showGroupMenu}"><br/>
+                <f:ajax execute="@form" render="@form"/>
+            </h:commandLink>
+            <h:commandLink action="#{adminManagerGroup.closeGroupMenu()}" value="Cerrar menú de grupos" rendered="#{adminManagerGroup.showGroupMenu}"><br/>
+                <f:ajax execute="@form" render="@form"/>
+            </h:commandLink>
+            <h:form id="adminForm" rendered="#{adminManager.showUser}">
+                <h:commandLink action="#{adminManager.setIsAdding(true)}" value="A&ntilde;adir usuario" >
+                    <f:ajax execute="@form" render="@form"/>
+                </h:commandLink>
+                <h:panelGrid id="addUserPanel" columns="5" rendered="#{adminManager.isAdding}">
+                    <f:facet name="header">New User</f:facet>
+                    <h:outputText value="First Names"/>
+                    <h:outputText value="Surnames"/>
+                    <h:outputText value="Username"/>
+                    <h:outputText value="Password"/>
+                    <h:outputText value="Type"/>
+                    <h:inputText value="#{adminManager.newUser.firstnames}"/>
+                    <h:inputText value="#{adminManager.newUser.surnames}"/>
+                    <h:inputText value="#{adminManager.newUser.username}"/>
+                    <h:inputText value="#{adminManager.newUser.password}"/>
+                    <h:selectOneMenu value = "#{adminManager.newUser.type}"> 
                         <f:selectItem itemValue = "1" itemLabel = "Administrator" /> 
                         <f:selectItem itemValue = "2" itemLabel = "Teacher" />
                         <f:selectItem itemValue = "3" itemLabel = "Student" />
                         <f:selectItem itemValue = "4" itemLabel = "none" />
-                    </h:selectOneMenu> 
-                </h:column>
-                <h:column>
-                    <h:commandLink value="Edit" action="#{adminManager.editUser(at)}" rendered="#{at.enable}">
-                        <f:ajax render="@form"/>
-                    </h:commandLink>
-                    <h:commandLink value="Save" action="#{adminManager.saveUser(at)}" rendered="#{not at.enable}">
-                        <f:ajax execute="@form" render="@form"/>
-                    </h:commandLink>
-                </h:column>
-                <h:column>
-                    <h:commandLink value="Cancel" action="#{adminManager.cancelEdit()}" rendered="#{not at.enable}" >
-                        <f:ajax render="@form" />
-                    </h:commandLink>
-                </h:column>
-                <h:column>
-                    <h:commandLink value="Erase" action="#{adminManager.deleteUser(at.iduser)}" rendered="#{at.enable}" onclick="return confirm('Are you sure?')">
-                        <f:ajax render="@form" />
-                    </h:commandLink>
-                </h:column>
-            </h:dataTable>
+                    </h:selectOneMenu>
+                    <h:panelGrid id="addUserPanelcommands" columns="2" border="1">
+                        <h:commandLink value="Save" action="#{adminManager.saveNewUser(adminManager.newUser)}">
+                            <f:ajax execute="@form" render="@form"/>
+                        </h:commandLink>
+                        <h:commandLink value="Cancel" action="#{adminManager.setIsAdding(false)}">
+                            <f:ajax render="@form" />
+                        </h:commandLink>
+                    </h:panelGrid>
+                </h:panelGrid>
+                <h:dataTable id="userTable" value="#{adminManager.adminTable}" var="at">
+                    <h:column>
+                        <f:facet name="header">First Names</f:facet>
+                        <h:outputText value="#{at.firstnames}" rendered="#{at.enable}"/>
+                        <h:inputText value="#{at.firstnames}" rendered="#{not at.enable}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Surnames</f:facet>
+                        <h:outputText value="#{at.surnames}" rendered="#{at.enable}"/>
+                        <h:inputText value="#{at.surnames}" rendered="#{not at.enable}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Username</f:facet>
+                        <h:outputText value="#{at.username}" rendered="#{at.enable}"/>
+                        <h:inputText value="#{at.username}" rendered="#{not at.enable}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Password</f:facet>
+                        <h:outputText value="#{at.password}" rendered="#{at.enable}"/>
+                        <h:inputText value="#{at.password}" rendered="#{not at.enable}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Type</f:facet>
+                        <h:outputText value="#{at.type}" rendered="#{at.enable}"/>
+                        <h:selectOneMenu value = "#{at.type}" rendered="#{not at.enable}"> 
+                            <f:selectItem itemValue = "1" itemLabel = "Administrator" /> 
+                            <f:selectItem itemValue = "2" itemLabel = "Teacher" />
+                            <f:selectItem itemValue = "3" itemLabel = "Student" />
+                            <f:selectItem itemValue = "4" itemLabel = "none" />
+                        </h:selectOneMenu> 
+                    </h:column>
+                    <h:column>
+                        <h:commandLink value="Edit" action="#{adminManager.editUser(at)}" rendered="#{at.enable}">
+                            <f:ajax render="@form"/>
+                        </h:commandLink>
+                        <h:commandLink value="Save" action="#{adminManager.saveUser(at)}" rendered="#{not at.enable}">
+                            <f:ajax execute="@form" render="@form"/>
+                        </h:commandLink>
+                    </h:column>
+                    <h:column>
+                        <h:commandLink value="Cancel" action="#{adminManager.cancelEdit()}" rendered="#{not at.enable}" >
+                            <f:ajax render="@form" />
+                        </h:commandLink>
+                    </h:column>
+                    <h:column>
+                        <h:commandLink value="Erase" action="#{adminManager.deleteUser(at.iduser)}" rendered="#{at.enable}" onclick="return confirm('Are you sure?')">
+                            <f:ajax render="@form" />
+                        </h:commandLink>
+                    </h:column>
+                </h:dataTable>
+            </h:form>
+            <h:form id="groupMenu" rendered="#{adminManagerGroup.showGroupMenu}">
+                <h:commandLink action="#{adminManagerGroup.setIsAddingtoGroup(true)}" value="A&ntilde;adir estudiante a grupo" >
+                    <f:ajax execute="@form" render="@form"/>
+                </h:commandLink>
+                <h:dataTable id="groupTable" value="#{adminManagerGroup.groupTable}" var="groupt">
+                    <h:column>
+                        <f:facet name="header">Group Name</f:facet>
+                        <h:outputText value="#{groupt.group.name}" rendered="#{groupt.show}"/>
+                        <h:inputText value="#{groupt.group.name}" rendered="#{!groupt.show}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Teacher in charge</f:facet>
+                        <h:outputText value="#{groupt.group.teacher.user.firstnames}" rendered="#{groupt.show}"/>
+                        <h:selectOneMenu value="#{groupt.group.teacher}" rendered="#{!groupt.show}">
+                            <f:selectItems value="#{adminManagerGroup.teacherList}" var="tl" itemLabel="#{tl.user.surnames}" itemValue="#{tl.iduser}"/>
+                        </h:selectOneMenu>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Edit</f:facet>
+                        <h:commandLink action="#{adminManagerGroup.editGroup(groupt)}" value="Editar menu" rendered="#{groupt.show}"><br/>
+                            <f:ajax execute="@form" render="@form"/>
+                        </h:commandLink>
+                        <h:commandLink action="#{adminManagerGroup.deleteGroup(groupt)}" value="Borrar Grupo" rendered="#{groupt.show}"><br/>
+                            <f:ajax execute="@form" render="@form"/>
+                        </h:commandLink>
+                        <h:commandLink action="#{adminManagerGroup.saveEditGroup(groupt)}" value="Guardar" rendered="#{!groupt.show}"><br/>
+                            <f:ajax execute="@form" render="@form"/>
+                        </h:commandLink>
+                        <h:commandLink action="#{adminManagerGroup.buildGroupTable()}" value="Cancelar" rendered="#{!groupt.show}"><br/>
+                            <f:ajax execute="@form" render="@form"/>
+                        </h:commandLink>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Manage Students</f:facet>
+                        <h:commandLink action="#{groupt.editGroup}" value="Gestion de Estudiantes" rendered="#{groupt.show}"><br/>
+                            <f:ajax execute="@form" render="@form"/>
+                        </h:commandLink>
+                    </h:column>
+                </h:dataTable>
+            </h:form>
         </h:form>
     </h:body>
 </html>
