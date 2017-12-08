@@ -223,7 +223,7 @@ function deleteObject(object) {
 
 //Borra el canvas
 function removeAll() {
-    if (confirm('¿Está seguro?')) {
+    if (confirm('¿Estas seguro?')) {
         var objects = canvas.getObjects();
         while (objects.length != 0) {
             canvas.remove(objects[0]);

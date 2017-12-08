@@ -31,12 +31,9 @@
             </div>
             <h:messages styleClass="text-info messages"></h:messages>
             <div class="nav">
+                <h:link value="Inicio" styleClass="active" />
                 <h:form>
-                    <h:inputHidden id="iduser" value="#{sessionBean.iduser}" />
                     <h:commandLink action="#{exerciseManager.showGroupExercises()}" value="Ejercicios" />
-                </h:form>
-                <h:form>
-                    <h:link outcome="createDiagram" value="Crear Diagrama"  /> 
                 </h:form>
             </div>
         </div>

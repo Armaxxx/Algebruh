@@ -31,11 +31,9 @@
             </div>
             <h:messages styleClass="text-info messages"></h:messages>
             <div class="nav">
+                <h:link outcome="home" value="Inicio" />
                 <h:form>
                     <h:link value="Ejercicios" styleClass="active" />
-                </h:form>
-                <h:form>
-                    <h:link outcome="createDiagram" value="Crear Diagrama"  /> 
                 </h:form>
             </div>
         </div>
@@ -52,8 +50,7 @@
                         <h:outputText value="#{ex.status}"/>
                     </h:column>
                     <h:column>
-                        <h:inputHidden value="#{sessionBean.iduser}" id="iduser" />
-                        <h:link value="Resolver" />
+                        <h:commandLink value="Resolver" action="#{diagramManager.solve(ex.idexercise)}" rendered="#{!ex.solved}" />
                     </h:column>
                 </h:dataTable>
             </h:form>
