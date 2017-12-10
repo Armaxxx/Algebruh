@@ -13,7 +13,7 @@ public class Exercise  implements java.io.Serializable {
 
      private Integer idexercise;
      private String equation;
-     private String eqtype;
+     private int eqtype;
      private Set schoolgroups = new HashSet(0);
      private Set diagrams = new HashSet(0);
 
@@ -21,11 +21,11 @@ public class Exercise  implements java.io.Serializable {
     }
 
 	
-    public Exercise(String equation, String eqtype) {
+    public Exercise(String equation, int eqtype) {
         this.equation = equation;
         this.eqtype = eqtype;
     }
-    public Exercise(String equation, String eqtype, Set schoolgroups, Set diagrams) {
+    public Exercise(String equation, int eqtype, Set schoolgroups, Set diagrams) {
        this.equation = equation;
        this.eqtype = eqtype;
        this.schoolgroups = schoolgroups;
@@ -46,11 +46,11 @@ public class Exercise  implements java.io.Serializable {
     public void setEquation(String equation) {
         this.equation = equation;
     }
-    public String getEqtype() {
+    public int getEqtype() {
         return this.eqtype;
     }
     
-    public void setEqtype(String eqtype) {
+    public void setEqtype(int eqtype) {
         this.eqtype = eqtype;
     }
     public Set getSchoolgroups() {
@@ -67,10 +67,6 @@ public class Exercise  implements java.io.Serializable {
     public void setDiagrams(Set diagrams) {
         this.diagrams = diagrams;
     }
-
-
-
-
 }
 
 
