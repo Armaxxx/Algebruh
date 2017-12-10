@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 @Named(value = "sessionBean")
 @SessionScoped
 public class SessionBean implements Serializable {
-    private int iduser;
     private String username;
     private String names;
     private String surnames;
@@ -21,23 +20,17 @@ public class SessionBean implements Serializable {
     private FacesContext fc;
     private HttpServletRequest request;
     private FacesMessage fm;
+    private HttpSession httpSession;
     
     public SessionBean() {
         fc = FacesContext.getCurrentInstance();
         request = (HttpServletRequest)fc.getExternalContext().getRequest();
-        HttpSession httpSession = request.getSession();
-        iduser = Integer.parseInt((String) httpSession.getAttribute("iduser"));
-        username = (String) httpSession.getAttribute("username");
-        type = (String) httpSession.getAttribute("type");
-        names = (String) httpSession.getAttribute("names");
-        surnames = (String) httpSession.getAttribute("surnames");
+        httpSession = request.getSession();
     }
     
     public String logout(){
         fc = FacesContext.getCurrentInstance();
         request = (HttpServletRequest)fc.getExternalContext().getRequest();
-        HttpSession httpSession = request.getSession();
-        httpSession.removeAttribute("iduser");
         httpSession.removeAttribute("username");
         httpSession.removeAttribute("type");
         httpSession.removeAttribute("names");
@@ -49,26 +42,28 @@ public class SessionBean implements Serializable {
     public void validateSession(ComponentSystemEvent event) throws IOException{
         String typeRequired = (String) event.getComponent().getAttributes().get("typeRequired");
         fc = FacesContext.getCurrentInstance();
+        createSession();
         if(username == null){
             fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Por favor, inicia sesión", null);
             fc.addMessage(null, fm);
+            logout();
             fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/user/login");
         }
         else if(type == null || !type.equals(typeRequired)){
             fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "No tienes permiso para acceder a esa página", null);
             fc.addMessage(null, fm);
+            logout();
             fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/" + type.toLowerCase() + "/home");
         }
     }
-
-    public int getIduser() {
-        return iduser;
-    }
-
-    public void setIduser(int iduser) {
-        this.iduser = iduser;
-    }
     
+    public void createSession(){
+        username = (String) httpSession.getAttribute("username");
+        type = (String) httpSession.getAttribute("type");
+        names = (String) httpSession.getAttribute("names");
+        surnames = (String) httpSession.getAttribute("surnames");
+    }
+
     public String getUsername() {
         return username;
     }

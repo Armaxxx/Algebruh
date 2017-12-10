@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Dec 2, 2017 5:03:56 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated Dec 4, 2017 4:46:36 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="entity.Student" table="student" catalog="algebruh" optimistic-lock="version">
         <id name="iduser" type="int">
@@ -11,7 +11,7 @@
             </generator>
         </id>
         <many-to-one name="schoolgroup" class="entity.Schoolgroup" fetch="select">
-            <column name="idgroup" not-null="true" />
+            <column name="idgroup" />
         </many-to-one>
         <one-to-one name="user" class="entity.User" constrained="true"></one-to-one>
         <set name="diagrams" table="diagram" inverse="true" lazy="true" fetch="select">

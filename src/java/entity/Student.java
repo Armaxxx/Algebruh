@@ -1,5 +1,5 @@
 package entity;
-// Generated Dec 2, 2017 5:03:56 PM by Hibernate Tools 4.3.1
+// Generated Dec 4, 2017 4:46:36 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -20,8 +20,7 @@ public class Student  implements java.io.Serializable {
     }
 
 	
-    public Student(Schoolgroup schoolgroup, User user) {
-        this.schoolgroup = schoolgroup;
+    public Student(User user) {
         this.user = user;
     }
     public Student(Schoolgroup schoolgroup, User user, Set diagrams) {

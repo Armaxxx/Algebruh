@@ -31,6 +31,7 @@ public class LoginBean implements Serializable {
     private FacesContext fc;
     private HttpServletRequest request;
     private FacesMessage fm;
+    private SessionBean appSession;
     
     public LoginBean() {
     }

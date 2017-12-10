@@ -1,5 +1,5 @@
 package entity;
-// Generated Dec 2, 2017 5:03:56 PM by Hibernate Tools 4.3.1
+// Generated Dec 4, 2017 4:46:36 PM by Hibernate Tools 4.3.1
 
 
 
@@ -35,10 +35,9 @@ public class Diagram  implements java.io.Serializable {
         return this.iddiagram;
     }
     
-    public void setIddiagram(Integer iddiagram){
+    public void setIddiagram(Integer iddiagram) {
         this.iddiagram = iddiagram;
     }
-    
     public Exercise getExercise() {
         return this.exercise;
     }
