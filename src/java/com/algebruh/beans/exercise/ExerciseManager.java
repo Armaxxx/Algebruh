@@ -52,8 +52,8 @@ public class ExerciseManager implements Serializable {
 
         for (Exercise ex : GroupEx) {
             ExerciseTable et = new ExerciseTable();
-            String eqType = ex.getEqtype();
-            if (eqType.equals("solve")) {
+            int eqType = ex.getEqtype();
+            if (eqType == 1) {
                 //Operaciones para mostrar ecuacion
                 et.setIdexercise(ex.getIdexercise());
                 String rawEquation = ex.getEquation();
