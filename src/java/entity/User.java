@@ -1,5 +1,5 @@
 package entity;
-// Generated Dec 4, 2017 4:46:36 PM by Hibernate Tools 4.3.1
+// Generated Dec 11, 2017 3:40:56 PM by Hibernate Tools 4.3.1
 
 
 
@@ -22,8 +22,7 @@ public class User  implements java.io.Serializable {
     }
 
 	
-    public User(String firstnames, String surnames, String username, String password) {
-        this.firstnames = firstnames;
+    public User(String surnames, String username, String password) {
         this.surnames = surnames;
         this.username = username;
         this.password = password;

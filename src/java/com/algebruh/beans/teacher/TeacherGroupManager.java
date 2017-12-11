@@ -1,13 +1,16 @@
 package com.algebruh.beans.teacher;
 
+import com.algebruh.common.utils.NewExercise;
 import entity.Exercise;
 import entity.HibernateUtil;
 import entity.Schoolgroup;
 import entity.Student;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
@@ -17,8 +20,8 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 @Named(value = "teacherGroupManager")
-@Dependent
-public class TeacherGroupManager {
+@SessionScoped
+public class TeacherGroupManager implements Serializable{
     private final FacesContext fc;
     private final HttpServletRequest request;
     private FacesMessage fm;
@@ -28,15 +31,13 @@ public class TeacherGroupManager {
     
     private final int idGroup;
     private final Schoolgroup group;
-    private Exercise newExercise;
+    private NewExercise newExercise;
     private int newStudent;
     private List<Student> students = new ArrayList<>();
     private List<Student> allStudents = new ArrayList<>();
     private List<Exercise> exercises = new ArrayList<>();
     private boolean hasStudents;
     private boolean hasExercises;
-    private boolean addingExercise;
-    private boolean addingStudent;
 
     public TeacherGroupManager() {
         hibernateSession = HibernateUtil.getSessionFactory().openSession();
@@ -44,25 +45,25 @@ public class TeacherGroupManager {
         request = (HttpServletRequest)fc.getExternalContext().getRequest();
         httpSession = request.getSession();
         
-        newExercise = new Exercise();
+        newExercise = new NewExercise();
         idGroup = (int)httpSession.getAttribute("id");
         group = (Schoolgroup)hibernateSession.get(Schoolgroup.class, idGroup);
         hasStudents = students.addAll(group.getStudents());
         hasExercises = exercises.addAll(group.getExercises());
-        addingExercise = false;
-        addingStudent = false;
         Query query = hibernateSession.createQuery("From Student");
         allStudents = query.list();
         allStudents.removeAll(students);
     }
-    
-    public void saveNewExercise(){
+    public void saveNewExercise(NewExercise newExercise){
         System.out.println("Entramos save exercise");
-        Exercise exercise = new Exercise(newExercise.getEquation(), newExercise.getEqtype(), newExercise.getSolution());
+        Exercise exercise = new Exercise(newExercise.getEquation(), newExercise.getEqtype());
+        exercise.setSolution(newExercise.getSolution());
         t = hibernateSession.beginTransaction();
         System.out.println("se crea exercise nuevo "+exercise.getEqtype()+" de "+exercise.getEquation());
-        hibernateSession.save(exercise);
+        System.out.println("Metemos el grupo a exercise");
+        exercise.getSchoolgroups().add(group);
         System.out.println("Lo guardamos");
+        hibernateSession.save(exercise);
         group.getExercises().add(exercise);
         System.out.println("se agrega al grupo");
         hibernateSession.saveOrUpdate(group);
@@ -87,6 +88,7 @@ public class TeacherGroupManager {
         students.add(student);
         System.out.println("Agregamos al array");
         hasStudents = true;
+        allStudents.remove(student);
         t.commit();
     }
     public void deleteUser(int id){
@@ -99,8 +101,20 @@ public class TeacherGroupManager {
         students.remove(student);
         if (students.isEmpty())
             hasStudents = false;
+        allStudents.add(student);
         t.commit();
-        
+    }
+    public void deleteExercise(int id){
+        t = hibernateSession.beginTransaction();
+        Exercise exercise = (Exercise)hibernateSession.get(Exercise.class,id);
+        group.getExercises().remove(exercise);
+        exercise.getSchoolgroups().remove(group);
+        hibernateSession.saveOrUpdate(group);
+        hibernateSession.saveOrUpdate(exercise);
+        exercises.remove(exercise);
+        if (exercises.isEmpty())
+            hasExercises = false;
+        t.commit();
     }
     public int getIdGroup() {
         return idGroup;
@@ -126,24 +140,8 @@ public class TeacherGroupManager {
         return hasExercises;
     }
 
-    public boolean isAddingExercise() {
-        return addingExercise;
-    }
-
-    public void setAddingExercise(boolean addingExercise) {
-        this.addingExercise = addingExercise;
-    }
-
-    public Exercise getNewExercise() {
+    public NewExercise getNewExercise() {
         return newExercise;
-    }
-
-    public boolean isAddingStudent() {
-        return addingStudent;
-    }
-
-    public void setAddingStudent(boolean addingStudent) {
-        this.addingStudent = addingStudent;
     }
 
     public int getNewStudent() {

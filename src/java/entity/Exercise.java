@@ -1,5 +1,5 @@
 package entity;
-// Generated Dec 4, 2017 4:46:36 PM by Hibernate Tools 4.3.1
+// Generated Dec 11, 2017 3:40:56 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -22,15 +22,14 @@ public class Exercise  implements java.io.Serializable {
     }
 
 	
-    public Exercise(String equation, String eqtype, String solution) {
+    public Exercise(String equation, String eqtype) {
         this.equation = equation;
         this.eqtype = eqtype;
-        this.solution = solution;
     }
     public Exercise(String equation, String eqtype, String solution, Set schoolgroups, Set diagrams) {
        this.equation = equation;
        this.eqtype = eqtype;
-        this.solution = solution;
+       this.solution = solution;
        this.schoolgroups = schoolgroups;
        this.diagrams = diagrams;
     }
@@ -56,15 +55,13 @@ public class Exercise  implements java.io.Serializable {
     public void setEqtype(String eqtype) {
         this.eqtype = eqtype;
     }
-
     public String getSolution() {
-        return solution;
+        return this.solution;
     }
-
+    
     public void setSolution(String solution) {
         this.solution = solution;
     }
-    
     public Set getSchoolgroups() {
         return this.schoolgroups;
     }
