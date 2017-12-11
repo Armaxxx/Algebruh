@@ -5,7 +5,7 @@
  */
 package com.algebruh.beans.student;
 
-import com.algebruh.beans.exercise.ExerciseTable;
+import com.algebruh.beans.exercise.ExerciseTableElement;
 import entity.Exercise;
 import entity.Student;
 import entity.HibernateUtil;

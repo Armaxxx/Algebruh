@@ -9,21 +9,23 @@ package com.algebruh.beans.exercise;
  *
  * @author Demis
  */
-public class ExerciseTable {
+public class ExerciseTableElement {
     private int idexercise;
+    private String type;
     private String equation;
-    private String solution;
     private boolean solved;
+    private boolean evaluated;
     private String status;
 
-    public ExerciseTable() {
+    public ExerciseTableElement() {
     }
 
-    public ExerciseTable(int idexercise, String equation, String solution, boolean solved, String status) {
+    public ExerciseTableElement(int idexercise, String type, String equation, boolean solved, boolean evaluated, String status) {
         this.idexercise = idexercise;
+        this.type = type;
         this.equation = equation;
-        this.solution = solution;
         this.solved = solved;
+        this.evaluated = evaluated;
         this.status = status;
     }
 
@@ -35,20 +37,20 @@ public class ExerciseTable {
         this.idexercise = idexercise;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+    
     public String getEquation() {
         return equation;
     }
 
     public void setEquation(String equation) {
         this.equation = equation;
-    }
-
-    public String getSolution() {
-        return solution;
-    }
-
-    public void setSolution(String solution) {
-        this.solution = solution;
     }
     
     public boolean isSolved() {
@@ -57,6 +59,14 @@ public class ExerciseTable {
 
     public void setSolved(boolean solved) {
         this.solved = solved;
+    }
+
+    public boolean isEvaluated() {
+        return evaluated;
+    }
+
+    public void setEvaluated(boolean evaluated) {
+        this.evaluated = evaluated;
     }
     
     public String getStatus() {

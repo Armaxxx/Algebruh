@@ -37,8 +37,7 @@ public class DiagramManager implements Serializable {
     private int idexercise;
     private Exercise exercise;
     private String[] eqElements;
-    private String finalEq;
-    private String solution;
+    private String[] solution;
     private String jsondata;
     /**
      * Creates a new instance of DiagramManager
@@ -46,7 +45,7 @@ public class DiagramManager implements Serializable {
     public DiagramManager() {
         fc = FacesContext.getCurrentInstance();
         request = (HttpServletRequest) fc.getExternalContext().getRequest();
-        HttpSession httpSession = request.getSession();
+        httpSession = request.getSession();
         String strId = (String) httpSession.getAttribute("iduser");
         iduser = Integer.parseInt(strId);
     }
@@ -56,14 +55,17 @@ public class DiagramManager implements Serializable {
         hibernateSession = HibernateUtil.getSessionFactory().openSession();
         exercise = (Exercise) hibernateSession.load(Exercise.class, idexercise);
         eqElements = exercise.getEquation().split(";");
-        int[] eq = new int[4];
-        for(int i=0; i<4; i++){
-            eq[i] = Integer.parseInt(eqElements[i]);
-        }
-        finalEq = EquationUtil.getEquation1ForView(eq);
-        solution = exercise.getSolution();
+        solution = exercise.getSolution().split(";");
         hibernateSession.close();
-        return "createDiagram";
+        switch(exercise.getEqtype()){
+            case 1:
+                return "diagram/solve";
+            case 2:
+                return "diagram/substitute";
+        }
+        fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Función aún no disponible", null);
+        fc.addMessage(null, fm);
+        return "exercises";
     }
     
     public String save(){        
@@ -78,7 +80,7 @@ public class DiagramManager implements Serializable {
         fc = FacesContext.getCurrentInstance();
         fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Diagrama guardado correctamente", null);
         fc.addMessage(null, fm);
-        return "home";
+        return "../home";
     }
 
     public int getIduser() {
@@ -105,19 +107,11 @@ public class DiagramManager implements Serializable {
         this.eqElements = eqElements;
     }
 
-    public String getFinalEq() {
-        return finalEq;
-    }
-
-    public void setFinalEq(String finalEq) {
-        this.finalEq = finalEq;
-    }
-
-    public String getSolution() {
+    public String[] getSolution() {
         return solution;
     }
 
-    public void setSolution(String solution) {
+    public void setSolution(String[] solution) {
         this.solution = solution;
     }
 

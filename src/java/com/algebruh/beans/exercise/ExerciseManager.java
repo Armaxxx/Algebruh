@@ -7,6 +7,7 @@ package com.algebruh.beans.exercise;
 
 import com.algebruh.common.utils.EquationUtil;
 import entity.Diagram;
+import entity.Evaluation;
 import entity.Exercise;
 import entity.HibernateUtil;
 import entity.Student;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Set;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -30,11 +32,14 @@ import org.hibernate.Session;
 public class ExerciseManager implements Serializable {
 
     private FacesContext fc;
+    private FacesMessage fm;
     private HttpServletRequest request;
     private Session hibernateSession;
 
     private int iduser;
-    private List<ExerciseTable> exerciseTable;
+    private List<ExerciseTableElement> exerciseTable;
+    
+    private final static String[] EXERCISE_TYPE = {"", "Despejar", "Sustituir", "Expander", "Factorizar"};
 
     public ExerciseManager() {
         fc = FacesContext.getCurrentInstance();
@@ -51,38 +56,39 @@ public class ExerciseManager implements Serializable {
         Set<Exercise> GroupEx = alumno.getSchoolgroup().getExercises();
 
         for (Exercise ex : GroupEx) {
-            ExerciseTable et = new ExerciseTable();
+            ExerciseTableElement et = new ExerciseTableElement();
             int eqType = ex.getEqtype();
-            if (eqType == 1) {
-                //Operaciones para mostrar ecuacion
-                et.setIdexercise(ex.getIdexercise());
-                String rawEquation = ex.getEquation();
-                String[] eqElements = rawEquation.split(";");
-                int[] eq = new int[4];
-                for(int i=0; i<4; i++){
-                    eq[i] = Integer.parseInt(eqElements[i]);
-                }
-                String finalEquation = EquationUtil.getEquation1ForView(eq);
-                et.setEquation(finalEquation);
-                //Operaciones para estado
-                Set<Diagram> exerciseDiagrams = ex.getDiagrams();
-                boolean solved = false;
-                
-                for(Diagram d : exerciseDiagrams){
-                    if(d.getStudent().getIduser() == iduser){
-                        solved = true;
-                        break;
+            et.setType(EXERCISE_TYPE[eqType]);
+            //Operaciones para mostrar ecuacion
+            et.setIdexercise(ex.getIdexercise());
+            String finalEquation = EquationUtil.parseEquation(ex.getEquation(), eqType);
+            et.setEquation(finalEquation);
+            
+            //Operaciones para estado
+            Set<Diagram> exerciseDiagrams = ex.getDiagrams();
+            boolean solved = false;
+            boolean evaluated = false;
+            String status = "No entregado";
+            for(Diagram d : exerciseDiagrams){
+                if(d.getStudent().getIduser() == iduser){
+                    solved = true;
+                    Evaluation ev = d.getEvaluation();
+                    if(ev != null){
+                        evaluated = true;
+                        status = "Calificado con " + ev.getGrade();
                     }
+                    else{
+                        status = "No calificado";
+                    }
+                    break;
                 }
-                et.setSolution(ex.getSolution());
-                et.setSolved(solved);
-                String status = solved ? "Entregado" : "No Entregado";
-                et.setStatus(status);
-
-                exerciseTable.add(et);
-            }
+            }   
+            et.setSolved(solved);
+            et.setEvaluated(evaluated);
+            et.setStatus(status);
+            exerciseTable.add(et);
         }
-
+        
         return "exercises";
     }
     public int getIduser() {
@@ -93,11 +99,11 @@ public class ExerciseManager implements Serializable {
         this.iduser = iduser;
     }
 
-    public List<ExerciseTable> getExerciseTable() {
+    public List<ExerciseTableElement> getExerciseTable() {
         return exerciseTable;
     }
 
-    public void setExerciseTable(List<ExerciseTable> exerciseTable) {
+    public void setExerciseTable(List<ExerciseTableElement> exerciseTable) {
         this.exerciseTable = exerciseTable;
     }    
 }

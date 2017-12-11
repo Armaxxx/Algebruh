@@ -8,6 +8,21 @@
         <title>Estudiante - Página principal</title>
         <link rel="stylesheet" type="text/css" href="../font-awesome-4.7.0/css/font-awesome.min.css" />
         <link rel="stylesheet" type="text/css" href="../css/master.css" />
+        <style type="text/css">
+            .table{
+                border-spacing: 0;
+            }
+            .row:hover{
+                border-style: none;
+                background-color: #DDD;
+            }
+            
+            .column{
+               border: 0;
+               margin: 0;
+               padding: 5px 20px;
+            }
+        </style>
     </h:head>
     <h:body>
         <f:metadata>
@@ -40,9 +55,14 @@
         <h:panelGroup layout="block" styleClass="container" id="container">
             <h1>Ejercicios</h1>
             <h:form id="exerciseForm">
-                <h:dataTable id="exerciseTable" value="#{exerciseManager.exerciseTable}" var="ex">
+                <h:dataTable id="exerciseTable" value="#{exerciseManager.exerciseTable}" var="ex"
+                             styleClass="table" rowClasses="row" columnClasses="column,column,column,column">
                     <h:column>
-                        <f:facet name="header">Exercise</f:facet>
+                        <f:facet name="header">Tipo</f:facet>
+                        <h:outputText value="#{ex.type}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Ejercicio</f:facet>
                         <h:outputText value="#{ex.equation}"/>
                     </h:column>
                     <h:column>
