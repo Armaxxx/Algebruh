@@ -74,7 +74,7 @@ public class SessionBean implements Serializable {
     public void setIduser(int iduser) {
         this.iduser = iduser;
     }
-
+    
     public String getUsername() {
         return username;
     }

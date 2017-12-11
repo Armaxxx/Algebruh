@@ -25,7 +25,6 @@ import org.hibernate.Session;
 @SessionScoped
 public class LoginBean implements Serializable {
     
-    private int iduser;
     private String username;
     private String password;
     private FacesContext fc;
@@ -81,14 +80,6 @@ public class LoginBean implements Serializable {
         return "/user/login";
     }
 
-    public int getIduser() {
-        return iduser;
-    }
-
-    public void setIduser(int iduser) {
-        this.iduser = iduser;
-    }
-    
     public String getUsername() {
         return username;
     }
