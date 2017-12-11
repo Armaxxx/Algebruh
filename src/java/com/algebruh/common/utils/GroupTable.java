@@ -10,6 +10,8 @@ public class GroupTable {
     private Teacher teacher;
     private List<User> users;
     private Boolean show;
+    private int teacherID;
+    private String newName;
 
     public GroupTable(Schoolgroup group, Teacher teacher, List<User> users) {
         this.group = group;
@@ -59,4 +61,21 @@ public class GroupTable {
     public void setUsers(List<User> users) {
         this.users = users;
     }
+
+    public int getTeacherID() {
+        return teacherID;
+    }
+
+    public void setTeacherID(int teacherID) {
+        this.teacherID = teacherID;
+    }
+
+    public String getNewName() {
+        return newName;
+    }
+
+    public void setNewName(String newName) {
+        this.newName = newName;
+    }
+    
 }
