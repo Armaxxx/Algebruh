@@ -21,7 +21,7 @@ public class SessionBean implements Serializable {
     private FacesContext fc;
     private HttpServletRequest request;
     private FacesMessage fm;
-    private HttpSession httpSession;
+    private final HttpSession httpSession;
     
     public SessionBean() {
         fc = FacesContext.getCurrentInstance();
@@ -60,7 +60,7 @@ public class SessionBean implements Serializable {
     }
     
     public void createSession(){
-        iduser = Integer.parseInt((String) httpSession.getAttribute("iduser"));
+        iduser = (int)httpSession.getAttribute("iduser");
         username = (String) httpSession.getAttribute("username");
         type = (String) httpSession.getAttribute("type");
         names = (String) httpSession.getAttribute("names");

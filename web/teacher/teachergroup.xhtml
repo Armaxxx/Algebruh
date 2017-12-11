@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Teacher - Group #{teacherGroupManager.idGroup}</title>
+    </h:head>
+    <h:body>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{sessionBean.validateSession}"/>
+            <f:attribute name="typeRequired" value="#{userTypeBean.TEACHER}" />
+        </f:metadata>
+        <h:messages></h:messages>
+        <p>Welcome Teacher, to group #{teacherGroupManager.group.name}</p>
+        <h:outputText value="#{sessionBean.names} #{sessionBean.surnames}" /><br />
+        <h:form id="ExerciseTeacher">
+            <h:commandLink value="Volver" action="home.xhtml"/><br/>
+            <h:commandLink action="#{sessionBean.logout()}" value="Cerrar sesión" /><br/>
+            <h:panelGrid id="addExercise" columns="3" border="1">
+                <h:outputText value="Equation (read the rules)"/>
+                <h:outputText value="Equation Type"/>
+                <h:outputText value="Solution"/>
+                <h:inputText value="#{teacherGroupManager.newExercise.equation}"/>
+                <h:selectOneMenu value = "#{teacherGroupManager.newExercise.eqtype}"> 
+                    <f:selectItem itemValue = "1" itemLabel = "solve" />
+                    <f:selectItem itemValue = "2" itemLabel = "Substitute" />
+                    <f:selectItem itemValue = "3" itemLabel = "Expand" />
+                    <f:selectItem itemValue = "4" itemLabel = "Factor" />
+                </h:selectOneMenu> 
+                <h:inputText value="#{teacherGroupManager.newExercise.solution}"/>
+                <h:commandLink value="Save" action="#{teacherGroupManager.saveNewExercise(teacherGroupManager.newExercise)}">
+                    <f:ajax execute="@form" render="@form"/>
+                </h:commandLink>
+            </h:panelGrid>
+            <h:dataTable value="#{teacherGroupManager.exercises}" var="ex" rendered="#{teacherGroupManager.hasExercises}">
+                <h:column>
+                    <f:facet name="header">Equation</f:facet>
+                    <h:outputText value="#{ex.equation}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Equation type</f:facet>
+                    <h:outputText value="#{ex.eqtype}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Solution</f:facet>
+                    <h:outputText value="#{ex.solution}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Remove</f:facet>
+                    <h:commandLink value="Remove" action="#{teacherGroupManager.deleteExercise(ex.idexercise)}">
+                        <f:ajax render="@form" />
+                    </h:commandLink>
+                </h:column>
+            </h:dataTable>
+        </h:form>
+        <h:form id="StudentsTeacher">
+            <h:panelGrid id="addStudent" columns="1" border="1">
+                <h:outputText value="Student Name"/>
+                <h:selectOneMenu value = "#{teacherGroupManager.newStudent}"> 
+                    <f:selectItems value="#{teacherGroupManager.allStudents}" var="stud" itemLabel="#{stud.user.firstnames} #{stud.user.surnames}" itemValue="#{stud.iduser}"/>
+                </h:selectOneMenu>
+                <h:commandLink value="Save" action="#{teacherGroupManager.saveNewStudent(teacherGroupManager.newStudent)}">
+                    <f:ajax execute="@form" render="@form"/>
+                </h:commandLink>
+            </h:panelGrid>
+            <h:dataTable value="#{teacherGroupManager.students}" var="st" rendered="#{teacherGroupManager.hasStudents}">
+                <h:column>
+                    <f:facet name="header">Student Name</f:facet>
+                    <h:outputText value="#{st.user.firstnames}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Student Surname</f:facet>
+                    <h:outputText value="#{st.user.surnames}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Remove</f:facet>
+                    <h:commandLink value="Remove" action="#{teacherGroupManager.deleteUser(st.iduser)}">
+                        <f:ajax render="@form" />
+                    </h:commandLink>
+                </h:column>
+            </h:dataTable>
+        </h:form>
+    </h:body>
+</html>

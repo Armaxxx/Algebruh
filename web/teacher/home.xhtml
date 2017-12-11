@@ -9,14 +9,22 @@
     <h:body>
         <f:metadata>
             <f:event type="preRenderView" listener="#{sessionBean.validateSession}"/>
+            <f:event type="preRenderView" listener="#{teacherMenuManager.buildGroupList()}"/>
             <f:attribute name="typeRequired" value="#{userTypeBean.TEACHER}" />
         </f:metadata>
         <h:messages></h:messages>
         Welcome teacher <h:outputText value="#{sessionBean.names} #{sessionBean.surnames}" /><br />
-        <h:form>
+        <h:form id="teacherForm">
             <h:commandLink action="#{sessionBean.logout()}" value="Cerrar sesión" />
-            <h:dataTable>
-                
+            <h:dataTable id="teacherGroupTable" value="#{teacherMenuManager.groupList}" var="group" >
+                <h:column>
+                    <f:facet name="header">Group Name</f:facet>
+                    <h:outputText value="#{group.name}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Action</f:facet>
+                    <h:commandLink value="Enter" action="#{teacherMenuManager.editGroup(group.idgroup)}"></h:commandLink>
+                </h:column>
             </h:dataTable>
         </h:form>
     </h:body>
