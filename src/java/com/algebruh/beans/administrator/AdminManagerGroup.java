@@ -31,14 +31,16 @@ public class AdminManagerGroup implements Serializable{
     private Boolean IsAddingtoGroup;
     private List<Schoolgroup> groupList;
     private List<GroupTable> groupTable;
-    private GroupTable groupRow;
+    private GroupTable groupRow,newGroup;
     private List<Teacher> teacherList;
+    
     public AdminManagerGroup() {
         hibernateSession = HibernateUtil.getSessionFactory().openSession();
         fc= FacesContext.getCurrentInstance();
         request = (HttpServletRequest)fc.getExternalContext().getRequest();
         Query groups = hibernateSession.createQuery("from Schoolgroup");
         groupList = groups.list();
+        newGroup = new GroupTable();
         showGroupMenu = false;
         IsAddingtoGroup = false;
         groupTable = new ArrayList<>();
@@ -55,6 +57,8 @@ public class AdminManagerGroup implements Serializable{
         setShowGroupMenu(false);
     }
     public void buildGroupTable(){
+        Query teachers = hibernateSession.createQuery("from Teacher");
+        teacherList = teachers.list();
         groupTable.clear();
         System.out.println("Entra construccion de tabla grupo");
         System.out.println("Query grupos");
@@ -106,18 +110,28 @@ public class AdminManagerGroup implements Serializable{
         int index;
         index = groupTable.indexOf(group);
         System.out.println("Conseguimos el grupo "+group.getGroup().getName()+" de index "+index);
-        System.out.println("preconstruccion edit");
+        /*System.out.println("preconstruccion edit");
         buildGroupTable();
-        System.out.println("postconstruccion edit");
+        System.out.println("postconstruccion edit");*/
         group.setShow(false);
         groupTable.set(index, group);
         System.out.println("Lo cambiamos en la tabla");
     }
     public void saveEditGroup(GroupTable group){
+        System.out.println("entra guardado");
+        System.out.println("Entra la edicion de nombre "+group.getGroup().getName());
         Transaction trans = hibernateSession.beginTransaction();
+        System.out.println("se crea la transaccion");
+        Teacher newTeacher = (Teacher)hibernateSession.get(Teacher.class, group.getTeacherID());
+        System.out.println("Entra la edicion el profe "+newTeacher.getUser().getFirstnames());
         Schoolgroup editedGroup = (Schoolgroup)hibernateSession.get(Schoolgroup.class, group.getGroup().getIdgroup());
-        editedGroup = group.getGroup();
-        hibernateSession.saveOrUpdate(editedGroup);
+        System.out.println("Obtenemos grupo "+editedGroup.getName()+" de profe "+editedGroup.getTeacher().getUser().getFirstnames());
+        editedGroup.setName(group.getGroup().getName());
+        System.out.println("Cambiamos su nombre");
+        editedGroup.setTeacher(newTeacher);
+        System.out.println("Cambiamos su maestro");
+        hibernateSession.update(editedGroup);
+        System.out.println("Se guarda o actualiza");
         trans.commit();
         buildGroupTable();
     }
@@ -128,6 +142,15 @@ public class AdminManagerGroup implements Serializable{
         group = groupPack.getGroup();
         trans = hibernateSession.beginTransaction();
         hibernateSession.delete(group);
+        trans.commit();
+        buildGroupTable();
+    }
+    public void saveNewGroup(GroupTable newGroup){
+        Transaction trans;
+        trans = hibernateSession.beginTransaction();
+        Teacher newTeacher = (Teacher)hibernateSession.get(Teacher.class, newGroup.getTeacherID());
+        Schoolgroup group = new Schoolgroup(newTeacher, newGroup.getNewName());
+        hibernateSession.save(group);
         trans.commit();
         buildGroupTable();
     }
@@ -161,6 +184,14 @@ public class AdminManagerGroup implements Serializable{
 
     public void setTeacherList(List<Teacher> teacherList) {
         this.teacherList = teacherList;
+    }
+
+    public GroupTable getNewGroup() {
+        return newGroup;
+    }
+
+    public void setNewGroup(GroupTable newGroup) {
+        this.newGroup = newGroup;
     }
     
 }
