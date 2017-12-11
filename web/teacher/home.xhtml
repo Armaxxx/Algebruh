@@ -14,7 +14,7 @@
         </f:metadata>
         <h:messages></h:messages>
         Welcome teacher <h:outputText value="#{sessionBean.names} #{sessionBean.surnames}" /><br />
-        <h:form>
+        <h:form id="teacherForm">
             <h:commandLink action="#{sessionBean.logout()}" value="Cerrar sesión" />
             <h:dataTable id="teacherGroupTable" value="#{teacherMenuManager.groupList}" var="group" >
                 <h:column>
