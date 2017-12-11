@@ -80,7 +80,7 @@ public class DiagramManager implements Serializable {
         fc = FacesContext.getCurrentInstance();
         fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Diagrama guardado correctamente", null);
         fc.addMessage(null, fm);
-        return "../home";
+        return "/student/home";
     }
 
     public int getIduser() {

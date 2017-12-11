@@ -35,17 +35,9 @@
         </div>
         
         <script type="text/javascript" src='../../js/fabric.js'></script>
+        <script type="text/javascript" src="../../js/diagram_master.js"></script>
         <script type="text/javascript" src="../../js/diagram_substitute.js"></script>
         <script type="text/javascript">
-            function save(){
-                if(step == 2){
-                    document.getElementById('saveData:jsondata').value = JSON.stringify(canvas.toJSON());
-                    return true;
-                }else{
-                    alert('Aun no has terminado');
-                    return false;
-                }
-            }
             init(#{diagramManager.eqElements[0]},#{diagramManager.eqElements[1]},#{diagramManager.eqElements[2]},#{diagramManager.solution[0]});
         </script>
     </h:body>
