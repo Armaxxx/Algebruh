@@ -11,7 +11,7 @@
         <property name="equation" type="string">
             <column name="equation" not-null="true" />
         </property>
-        <property name="eqtype" type="string">
+        <property name="eqtype" type="int">
             <column name="eqtype" not-null="true" />
         </property>
         <property name="solution" type="string">
