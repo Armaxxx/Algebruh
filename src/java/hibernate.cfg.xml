@@ -5,8 +5,8 @@
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/algebruh</property>
-    <property name="hibernate.connection.username">admin</property>
-    <property name="hibernate.connection.password">admin</property>
+    <property name="hibernate.connection.username">admin2</property>
+    <property name="hibernate.connection.password">admin2</property>
     <property name="hibernate.connection.pool_size">20</property>
     <mapping resource="entity/Schoolgroup.hbm.xml"/>
     <mapping resource="entity/Administrator.hbm.xml"/>
