@@ -62,7 +62,7 @@ public class LoginBean implements Serializable {
                     return "/user/login.xhtml";
                 }else{
                     HttpSession httpSession = request.getSession();
-                    httpSession.setAttribute("iduser", "" + user.getIduser());
+                    httpSession.setAttribute("iduser",user.getIduser());
                     httpSession.setAttribute("username", username);
                     httpSession.setAttribute("type", type.name());
                     httpSession.setAttribute("names", user.getFirstnames());

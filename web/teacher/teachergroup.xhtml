@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Teacher - Group #{teacherGroupManager.idGroup}</title>
+    </h:head>
+    <h:body>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{sessionBean.validateSession}"/>
+            <f:attribute name="typeRequired" value="#{userTypeBean.TEACHER}" />
+        </f:metadata>
+        <h:messages></h:messages>
+        <p>Welcome Teacher, to group #{teacherGroupManager.group.name}</p>
+        <h:outputText value="#{sessionBean.names} #{sessionBean.surnames}" /><br />
+        <h:form>
+            <h:commandLink value="Volver" action="home.xhtml"/><br/>
+            <h:commandLink action="#{sessionBean.logout()}" value="Cerrar sesión" /><br/>
+            <h:commandLink value="Add Exercise" action="#{teacherGroupManager.setAddingExercise(true)}">
+                <f:ajax render="addExercise" execute="addExercise"/>
+            </h:commandLink><br/>
+            <h:panelGrid id="addExercise" columns="3" border="1" rendered="#{teacherGroupManager.addingExercise}">
+                <h:outputText value="Equation (read the rules)"/>
+                <h:outputText value="Equation Type"/>
+                <h:outputText value="Solution"/>
+                <h:inputText value="#{teacherGroupManager.newExercise.equation}"/>
+                <h:selectOneMenu value = "#{teacherGroupManager.newExercise.eqtype}"> 
+                    <f:selectItem itemValue = "solve" itemLabel = "solve" />
+                </h:selectOneMenu> 
+                <h:inputText value="#{teacherGroupManager.newExercise.solution}"/>
+                <h:commandLink value="Save" action="#{teacherGroupManager.saveNewExercise()}">
+                    <f:ajax execute="@form" render="@form"/>
+                </h:commandLink>
+                <h:commandLink value="Cancel" action="#{teacherGroupManager.setAddingExercise(false)}">
+                    <f:ajax render="@form" />
+                </h:commandLink>
+            </h:panelGrid>
+            <h:dataTable value="#{teacherGroupManager.exercises}" var="ex" rendered="#{teacherGroupManager.hasExercises}">
+                <h:column>
+                    <f:facet name="header">Equation</f:facet>
+                    <h:outputText value="#{ex.equation}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Equation type</f:facet>
+                    <h:outputText value="#{ex.eqtype}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Solution</f:facet>
+                    <h:outputText value="#{ex.solution}"/>
+                </h:column>
+            </h:dataTable>
+            <h:commandLink value="Add Student" action="#{teacherGroupManager.setAddingStudent(true)}">
+                <f:ajax render="@form" execute="@form"/>
+            </h:commandLink>
+            <h:panelGrid id="addStudent" columns="1" border="1" rendered="#{teacherGroupManager.addingStudent}">
+                <h:outputText value="Student Name"/>
+                <h:selectOneMenu value = "#{teacherGroupManager.newStudent.iduser}"> 
+                    <f:selectItems value="#{teacherGroupManager.allStudents}" var="stud" itemLabel="#{stud.user.firstnames} #{stud.user.surnames}" itemValue="#{stud.iduser}"/>
+                </h:selectOneMenu>
+                <h:commandLink value="Save" action="#{teacherGroupManager.saveNewStudent()}">
+                    <f:ajax execute="@form" render="@form"/>
+                </h:commandLink>
+                <h:commandLink value="Cancel" action="#{teacherGroupManager.setAddingStudent(false)}">
+                    <f:ajax render="@form" />
+                </h:commandLink>
+            </h:panelGrid>
+            <h:dataTable value="#{teacherGroupManager.students}" var="st" rendered="#{teacherGroupManager.hasStudents}">
+                <h:column>
+                    <f:facet name="header"></f:facet>
+                </h:column>
+            </h:dataTable>
+        </h:form>
+    </h:body>
+</html>
