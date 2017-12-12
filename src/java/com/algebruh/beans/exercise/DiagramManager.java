@@ -5,7 +5,6 @@
  */
 package com.algebruh.beans.exercise;
 
-import com.algebruh.common.utils.EquationUtil;
 import entity.Diagram;
 import entity.Exercise;
 import entity.HibernateUtil;

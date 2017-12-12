@@ -29,7 +29,7 @@
             </h:commandLink>
             <h:form id="adminForm" rendered="#{adminManager.showUser}">
                 <h:commandLink action="#{adminManager.setIsAdding(true)}" value="A&ntilde;adir usuario" >
-                    <f:ajax execute="addUserPanel" render="addUserPanel"/>
+                    <f:ajax execute="@form" render="@form"/>
                 </h:commandLink>
                 <h:panelGrid id="addUserPanel" columns="5" rendered="#{adminManager.isAdding}">
                     <f:facet name="header">New User</f:facet>
