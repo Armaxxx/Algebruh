@@ -4,6 +4,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html">
     <h:head>
         <title>Crear diagrama - Estudiante</title>
+        <link rel="stylesheet" type="text/css" href="../../css/diagram_master.css" />
         <link rel="stylesheet" type="text/css" href="../../css/diagram_substitute.css" />
     </h:head>
     <h:body>
@@ -20,10 +21,10 @@
         <div id="toolbox">
             <p>Herramientas</p>
             <div id="controls">
-                <button id="addX" onclick="changeOption(0)" class="active">X</button>
-                <button id="addUnit" onclick="changeOption(1)">1</button>
-                <button id="subX" onclick="changeOption(2)">-X</button>
+                <button id="addUnit" onclick="changeOption(0)" class="active">1</button>
+                <button id="addX" onclick="changeOption(1)">X</button>
                 <button id="subUnit" onclick="changeOption(3)">-1</button>
+                <button id="subX" onclick="changeOption(4)">-X</button>
                 <hr />
                 <button class='control' onclick="removeAll()">Borrar Todo</button>
                 <h:form id="saveData">

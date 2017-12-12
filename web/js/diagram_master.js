@@ -12,9 +12,9 @@ var mensaje = document.getElementById('mensaje');
 var currentEq = document.getElementById('current');
 
 //IDs de los botones en orden
-var optionsId = ['addX', 'addUnit', 'subX', 'subUnit'];
+var optionsId = ['addUnit', 'addX', 'addX2', 'subUnit', 'subX', 'subX2'];
 //Colores de los botones en orden, para identificación
-var rectangles = ['blue', 'green', 'red', 'purple'];
+var rectangles = ['yellow', 'green', 'blue', 'brown', 'red', 'purple'];
 //Botón seleccionado actualmente
 var selectedOpt = 0;
 //Estado del ejercicio
@@ -141,7 +141,7 @@ function changeOption(newOption) {
 
 function deleteObject() {
     var activeObject = canvas.getActiveObject();
-    if (activeObject.type === 'activeSelection') {
+    if (activeObject.type == 'activeSelection') {
         var objects = activeObject.getObjects();
         for(var i = 0; i<objects.length; i++){
             canvas.remove(objects[i]);
@@ -162,4 +162,5 @@ function clearCanvas(){
     }
     _isObjectSelected = false;
     _wasObjectSelected = false;
+    step = 0;
 }

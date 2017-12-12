@@ -22,8 +22,10 @@
             <div id="controls">
                 <button id="addUnit" onclick="changeOption(0)" class="active">1</button>
                 <button id="addX" onclick="changeOption(1)">X</button>
+                <button id="addX2" onclick="changeOption(2)">X&sup2;</button>
                 <button id="subUnit" onclick="changeOption(3)">-1</button>
                 <button id="subX" onclick="changeOption(4)">-X</button>
+                <button id="subX2" onclick="changeOption(5)">-X&sup2;</button>
                 <hr />
                 <button class='control' onclick="removeAll()">Borrar Todo</button>
                 <h:form id="saveData">
@@ -36,9 +38,16 @@
         
         <script type="text/javascript" src='../../js/fabric.js'></script>
         <script type="text/javascript" src="../../js/diagram_master.js"></script>
-        <script type="text/javascript" src="../../js/diagram_solve.js"></script>
+        <script type="text/javascript" src="../../js/diagram_expand.js"></script>
         <script type="text/javascript">
-            init(#{diagramManager.eqElements[0]},#{diagramManager.eqElements[1]},#{diagramManager.eqElements[2]},#{diagramManager.eqElements[3]},#{diagramManager.solution[0]});
+            init(
+                    #{diagramManager.eqElements[0]},
+                    #{diagramManager.eqElements[1]},
+                    #{diagramManager.eqElements[2]},
+                    #{diagramManager.eqElements[3]},
+                    #{diagramManager.solution[0]},
+                    #{diagramManager.solution[1]},
+                    #{diagramManager.solution[2]});
         </script>
     </h:body>
 </html>

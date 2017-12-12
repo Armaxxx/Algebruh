@@ -36,7 +36,7 @@ public class ExerciseManager implements Serializable {
     private HttpServletRequest request;
     private Session hibernateSession;
 
-    private int iduser;
+    private int idstudent;
     private List<ExerciseTableElement> exerciseTable;
     
     private final static String[] EXERCISE_TYPE = {"", "Despejar", "Sustituir", "Expander", "Factorizar"};
@@ -46,13 +46,13 @@ public class ExerciseManager implements Serializable {
         request = (HttpServletRequest) fc.getExternalContext().getRequest();
         HttpSession httpSession = request.getSession();
         String strId = (String) httpSession.getAttribute("iduser");
-        iduser = Integer.parseInt(strId);
+        idstudent = Integer.parseInt(strId);
     }
 
     public String showGroupExercises() {
         exerciseTable = new ArrayList<>();
         hibernateSession = HibernateUtil.getSessionFactory().openSession();
-        Student alumno = (Student) hibernateSession.load(Student.class, iduser);
+        Student alumno = (Student) hibernateSession.load(Student.class, idstudent);
         Set<Exercise> GroupEx = alumno.getSchoolgroup().getExercises();
 
         for (Exercise ex : GroupEx) {
@@ -66,12 +66,14 @@ public class ExerciseManager implements Serializable {
             
             //Operaciones para estado
             Set<Diagram> exerciseDiagrams = ex.getDiagrams();
+            int iddiagram = 0;
             boolean solved = false;
             boolean evaluated = false;
             String status = "No entregado";
             for(Diagram d : exerciseDiagrams){
-                if(d.getStudent().getIduser() == iduser){
+                if(d.getStudent().getIduser() == idstudent){
                     solved = true;
+                    iddiagram = d.getIddiagram();
                     Evaluation ev = d.getEvaluation();
                     if(ev != null){
                         evaluated = true;
@@ -84,6 +86,7 @@ public class ExerciseManager implements Serializable {
                 }
             }   
             et.setSolved(solved);
+            et.setIddiagram(iddiagram);
             et.setEvaluated(evaluated);
             et.setStatus(status);
             exerciseTable.add(et);
@@ -91,12 +94,12 @@ public class ExerciseManager implements Serializable {
         
         return "exercises";
     }
-    public int getIduser() {
-        return iduser;
+    public int getIdstudent() {
+        return idstudent;
     }
 
-    public void setIduser(int iduser) {
-        this.iduser = iduser;
+    public void setIdstudent(int idstudent) {
+        this.idstudent = idstudent;
     }
 
     public List<ExerciseTableElement> getExerciseTable() {

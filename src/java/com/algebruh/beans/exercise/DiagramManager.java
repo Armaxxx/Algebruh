@@ -38,6 +38,9 @@ public class DiagramManager implements Serializable {
     private Exercise exercise;
     private String[] eqElements;
     private String[] solution;
+    private int exerciseType;
+    private String rawEquation;
+    private String rawSolution;
     private String jsondata;
     /**
      * Creates a new instance of DiagramManager
@@ -62,10 +65,24 @@ public class DiagramManager implements Serializable {
                 return "diagram/solve";
             case 2:
                 return "diagram/substitute";
+            case 3:
+                return "diagram/expand";
+            case 4:
+                return "diagram/factor";
         }
         fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Función aún no disponible", null);
         fc.addMessage(null, fm);
         return "exercises";
+    }
+    
+    public String show(int iddiagram){
+        hibernateSession = HibernateUtil.getSessionFactory().openSession();
+        Diagram d = (Diagram) hibernateSession.load(Diagram.class, iddiagram);
+        rawEquation = d.getExercise().getEquation();
+        rawSolution = d.getExercise().getSolution();
+        jsondata = d.getSerial();
+        exerciseType = d.getExercise().getEqtype();
+        return "diagram/show";
     }
     
     public String save(){        
@@ -115,6 +132,30 @@ public class DiagramManager implements Serializable {
         this.solution = solution;
     }
 
+    public String getRawEquation() {
+        return rawEquation;
+    }
+
+    public void setRawEquation(String rawEquation) {
+        this.rawEquation = rawEquation;
+    }
+
+    public String getRawSolution() {
+        return rawSolution;
+    }
+
+    public void setRawSolution(String rawSolution) {
+        this.rawSolution = rawSolution;
+    }
+
+    public int getExerciseType() {
+        return exerciseType;
+    }
+
+    public void setExerciseType(int exerciseType) {
+        this.exerciseType = exerciseType;
+    }
+    
     public String getJsondata() {
         return jsondata;
     }

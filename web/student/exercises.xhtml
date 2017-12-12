@@ -71,6 +71,7 @@
                     </h:column>
                     <h:column>
                         <h:commandLink value="Resolver" action="#{diagramManager.solve(ex.idexercise)}" rendered="#{!ex.solved}" />
+                        <h:commandLink value="Ver diagrama" action="#{diagramManager.show(ex.iddiagram)}" rendered="#{ex.solved}" />
                     </h:column>
                 </h:dataTable>
             </h:form>

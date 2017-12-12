@@ -48,14 +48,14 @@ function equationToString(eq) {
 
 //Actualiza la ecuación, de acuerdo a cambios en el canvas
 function updateCurrentEquation(x) {
-    var qty = [1,1,-1,-1];
+    var qty = [1,1,1,-1,-1,-1];
     var values = [[0,0],[0,0]];
     var objects = canvas.getObjects();
     for(var i=1; i<objects.length; i++){
         var tile = objects[i];
         var zone = tile.get('left') < CANVAS_MIDDLE_WIDTH ? 0 : 1;
         var index = rectangles.indexOf(tile.get('fill'));
-        values[zone][index%2] += qty[index];
+        values[zone][1-(index%3)] += qty[index];
     }
     current.xLeft = values[0][0];
     current.uLeft = values[0][1];
