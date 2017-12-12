@@ -55,10 +55,52 @@ public class TeacherGroupManager implements Serializable{
     }
     public void saveNewExercise(NewExercise newExercise){
         System.out.println("Entramos save exercise");
-        Exercise exercise = new Exercise(newExercise.getEquation(),newExercise.getEqtype(),newExercise.getSolution());
-        exercise.setSolution(newExercise.getSolution());
+        System.out.println("El tipo de ejercicio es "+newExercise.getEqtype());
+        Exercise exercise = new Exercise();
+        String equation;
+        String solution;
+        switch(newExercise.getEqtype()){
+            case 1:
+                System.out.println("Es solve");
+                equation = newExercise.getA()+";"+newExercise.getB()+";"+newExercise.getC()+";"+newExercise.getD();
+                solution = Integer.toString(newExercise.getE());
+                System.out.println("Solucion = "+solution);
+                exercise.setEquation(equation);
+                exercise.setEqtype(newExercise.getEqtype());
+                exercise.setSolution(solution);
+                break;
+            case 2:
+                System.out.println("Es Substitute");
+                equation = newExercise.getA()+";"+newExercise.getB()+";"+newExercise.getC();
+                solution = Integer.toString(newExercise.getD());
+                System.out.println("Solucion = "+solution);
+                exercise.setEquation(equation);
+                exercise.setEqtype(newExercise.getEqtype());
+                exercise.setSolution(solution);
+                break;
+            case 3:
+                System.out.println("Es Expand");
+                equation = newExercise.getA()+";"+newExercise.getB()+";"+newExercise.getC()+";"+newExercise.getD();
+                solution = newExercise.getE()+";"+newExercise.getF()+";"+newExercise.getG();
+                System.out.println("Solucion = "+solution);
+                exercise.setEquation(equation);
+                exercise.setEqtype(newExercise.getEqtype());
+                exercise.setSolution(solution);
+                break;
+            case 4:
+                System.out.println("Es Factor");
+                equation = newExercise.getA()+";"+newExercise.getB()+";"+newExercise.getC();
+                solution = newExercise.getD()+";"+newExercise.getE()+";"+newExercise.getF()+";"+newExercise.getG();
+                System.out.println("Solucion = "+solution);
+                exercise.setEquation(equation);
+                exercise.setEqtype(newExercise.getEqtype());
+                exercise.setSolution(solution);
+                break;
+            default:
+                break;
+        }
         t = hibernateSession.beginTransaction();
-        System.out.println("se crea exercise nuevo "+exercise.getEqtype()+" de "+exercise.getEquation());
+        System.out.println("se crea exercise nuevo "+exercise.getEqtype()+" de "+exercise.getEquation()+" con solucion "+exercise.getSolution());
         System.out.println("Metemos el grupo a exercise");
         exercise.getSchoolgroups().add(group);
         System.out.println("Lo guardamos");
@@ -69,6 +111,40 @@ public class TeacherGroupManager implements Serializable{
         System.out.println("se guarda el grupo");
         exercises.add(exercise);
         t.commit();
+    }
+    public void eqTypeSelect(int x){
+        switch(x){
+            case 1:
+                newExercise.setIsSolve(true);
+                newExercise.setIsSubstitute(false);
+                newExercise.setIsExpand(false);
+                newExercise.setIsFactor(false);
+                break;
+            case 2:
+                newExercise.setIsSolve(false);
+                newExercise.setIsSubstitute(true);
+                newExercise.setIsExpand(false);
+                newExercise.setIsFactor(false);
+                break;
+            case 3:
+                newExercise.setIsSolve(false);
+                newExercise.setIsSubstitute(false);
+                newExercise.setIsExpand(true);
+                newExercise.setIsFactor(false);
+                break;
+            case 4:
+                newExercise.setIsSolve(false);
+                newExercise.setIsSubstitute(false);
+                newExercise.setIsExpand(false);
+                newExercise.setIsFactor(true);
+                break;
+            default:
+                newExercise.setIsSolve(false);
+                newExercise.setIsSubstitute(false);
+                newExercise.setIsExpand(false);
+                newExercise.setIsFactor(false);
+                break;
+        }
     }
     public void saveNewStudent(int newStudent){
         System.out.println("Entra Save Student");
