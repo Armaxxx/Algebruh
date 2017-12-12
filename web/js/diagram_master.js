@@ -23,66 +23,7 @@ var step = 0;
 //Fabric init
 var canvas = new fabric.Canvas('c');
 
-function expressionToString(x, u){
-    var strX = "";
-    var op = "";
-    var strU ="";
-    if(x == 0){
-        strX = "";
-    }else if(x == 1){
-        strX = "X";
-    }else if(x == -1){
-        strX = "-X";
-    }else{
-        strX = x + "X";
-    }
-    
-    if(u > 0){
-        op = x == 0 ? "" : " + ";
-        strU = u;
-    }
-    else if(u < 0){
-        op = " - ";
-        strU = -u;
-    }
-    else{
-        op = "";
-        strU = x == 0? "0" : "";
-    }
-    return strX + op + strU;
-}
-
-//Cambia el botón activo
-function changeOption(newOption) {
-    document.getElementById(optionsId[selectedOpt]).classList.toggle('active');
-    document.getElementById(optionsId[newOption]).classList.toggle('active');
-
-    selectedOpt = newOption;
-}
-
-function deleteObject() {
-    var activeObject = canvas.getActiveObject();
-    if (activeObject.type === 'activeSelection') {
-        var objects = activeObject.getObjects();
-        for(var i = 0; i<objects.length; i++){
-            canvas.remove(objects[i]);
-        }
-        canvas.discardActiveObject().renderAll();
-    } else{
-        canvas.remove(activeObject);
-    }
-    updateCurrentEquation();
-}
-
-function clearCanvas(){
-    var objects = canvas.getObjects();
-    while (objects.length != 0) {
-        canvas.remove(objects[0]);
-    }
-}
-
 //Listeners para detectar cambios en el canvas
-
 var _isMouseDown = false;
 var _isDragging = false;
 var _isObjectSelected = false;
@@ -159,4 +100,66 @@ function save(){
         alert('Aun no has terminado');
         return false;
     }
+}
+
+function expressionToString(x, u){
+    var strX = "";
+    var op = "";
+    var strU ="";
+    if(x == 0){
+        strX = "";
+    }else if(x == 1){
+        strX = "X";
+    }else if(x == -1){
+        strX = "-X";
+    }else{
+        strX = x + "X";
+    }
+    
+    if(u > 0){
+        op = x == 0 ? "" : " + ";
+        strU = u;
+    }
+    else if(u < 0){
+        op = " - ";
+        strU = -u;
+    }
+    else{
+        op = "";
+        strU = x == 0? "0" : "";
+    }
+    return strX + op + strU;
+}
+
+//Cambia el botón activo
+function changeOption(newOption) {
+    document.getElementById(optionsId[selectedOpt]).classList.toggle('active');
+    document.getElementById(optionsId[newOption]).classList.toggle('active');
+
+    selectedOpt = newOption;
+}
+
+function deleteObject() {
+    var activeObject = canvas.getActiveObject();
+    if (activeObject.type === 'activeSelection') {
+        var objects = activeObject.getObjects();
+        for(var i = 0; i<objects.length; i++){
+            canvas.remove(objects[i]);
+        }
+        canvas.discardActiveObject().renderAll();
+    } else{
+        canvas.remove(activeObject);
+    }
+    _isObjectSelected = false;
+    _wasObjectSelected = false;
+    updateCurrentEquation();
+}
+
+function clearCanvas(){
+    var objects = canvas.getObjects();
+    while (objects.length != 0) {
+        canvas.remove(objects[0]);
+    }
+    _isObjectSelected = false;
+    _wasObjectSelected = false;
 }
