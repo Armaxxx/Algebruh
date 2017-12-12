@@ -45,8 +45,7 @@ public class ExerciseManager implements Serializable {
         fc = FacesContext.getCurrentInstance();
         request = (HttpServletRequest) fc.getExternalContext().getRequest();
         HttpSession httpSession = request.getSession();
-        String strId = (String) httpSession.getAttribute("iduser");
-        idstudent = Integer.parseInt(strId);
+        idstudent = (int)httpSession.getAttribute("iduser");
     }
 
     public String showGroupExercises() {

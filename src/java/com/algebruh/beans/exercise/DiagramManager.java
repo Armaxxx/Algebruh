@@ -48,8 +48,7 @@ public class DiagramManager implements Serializable {
         fc = FacesContext.getCurrentInstance();
         request = (HttpServletRequest) fc.getExternalContext().getRequest();
         httpSession = request.getSession();
-        String strId = (String) httpSession.getAttribute("iduser");
-        iduser = Integer.parseInt(strId);
+        iduser = (int) httpSession.getAttribute("iduser");
     }
     
     public String solve(int idexercise){

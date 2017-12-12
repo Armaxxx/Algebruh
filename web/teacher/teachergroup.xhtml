@@ -47,22 +47,22 @@
                     <h:inputText value="#{teacherGroupManager.newExercise.c}"/><p>X+</p>
                     <h:inputText value="#{teacherGroupManager.newExercise.d}"/><p>)</p>
                 </h:form>
-                <h:form id="formExpandSolution" rendered="#{teacherGroupManager.newExercise.isExpand}">
+                <h:panelGroup rendered="#{teacherGroupManager.newExercise.isExpand}">
                     <h:inputText value="#{teacherGroupManager.newExercise.e}"/><p>X<sup>2</sup>+</p>
                     <h:inputText value="#{teacherGroupManager.newExercise.f}"/><p>X+</p>
                     <h:inputText value="#{teacherGroupManager.newExercise.g}"/>
-                </h:form>
+                </h:panelGroup>
                 <h:form id="formFactor" rendered="#{teacherGroupManager.newExercise.isFactor}">
                     <h:inputText value="#{teacherGroupManager.newExercise.a}"/><p>X<sup>2</sup>+</p>
                     <h:inputText value="#{teacherGroupManager.newExercise.b}"/><p>X+</p>
                     <h:inputText value="#{teacherGroupManager.newExercise.c}"/>
                 </h:form>
-                <h:form id="formFactorSolution" rendered="#{teacherGroupManager.newExercise.isFactor}">
+                <h:panelGroup rendered="#{teacherGroupManager.newExercise.isFactor}">
                    (<h:inputText value="#{teacherGroupManager.newExercise.d}"/><p>X+</p>
                     <h:inputText value="#{teacherGroupManager.newExercise.e}"/><p>)(</p>
                     <h:inputText value="#{teacherGroupManager.newExercise.f}"/><p>X+</p>
                     <h:inputText value="#{teacherGroupManager.newExercise.g}"/><p>)</p>
-                </h:form>
+                </h:panelGroup>>
                 <h:commandLink value="Save" action="#{teacherGroupManager.saveNewExercise(teacherGroupManager.newExercise)}">
                     <f:ajax execute="@form" render="@form"/>
                 </h:commandLink>
