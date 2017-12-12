@@ -11,6 +11,7 @@ package com.algebruh.beans.exercise;
  */
 public class ExerciseTableElement {
     private int idexercise;
+    private int iddiagram;
     private String type;
     private String equation;
     private boolean solved;
@@ -20,8 +21,9 @@ public class ExerciseTableElement {
     public ExerciseTableElement() {
     }
 
-    public ExerciseTableElement(int idexercise, String type, String equation, boolean solved, boolean evaluated, String status) {
+    public ExerciseTableElement(int idexercise, int iddiagram, String type, String equation, boolean solved, boolean evaluated, String status) {
         this.idexercise = idexercise;
+        this.iddiagram = iddiagram;
         this.type = type;
         this.equation = equation;
         this.solved = solved;
@@ -37,6 +39,14 @@ public class ExerciseTableElement {
         this.idexercise = idexercise;
     }
 
+    public int getIddiagram() {
+        return iddiagram;
+    }
+
+    public void setIddiagram(int iddiagram) {
+        this.iddiagram = iddiagram;
+    }
+    
     public String getType() {
         return type;
     }
